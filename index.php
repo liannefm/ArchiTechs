@@ -7,10 +7,11 @@ include("includes/header.php");
         <?php
             include("includes/sidebar.php");
         ?>
-        
-        <div id="titelbox">
-            <h1>De geschiedenis van Utrecht</h1>
-        </div>  
+        <div id="topbar">
+            <div id="titelbox">
+                <h1>De geschiedenis van Utrecht</h1>
+            </div> 
+        </div> 
     </div>
 
 
