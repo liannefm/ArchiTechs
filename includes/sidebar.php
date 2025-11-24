@@ -1,5 +1,6 @@
 <body>
-    <div id="sidebar">Het utrechts archief
+    <div id="sidebar">
+        <h2>Het utrechts archief</h2>
     </div>
 
 </body>

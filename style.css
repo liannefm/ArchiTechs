@@ -21,6 +21,19 @@ h1 {
     font-size: 52px;
     font-family: 'hua';
     font-weight: 100;
+    color: white;
+}
+
+h2, sidebar{
+    display: flex;
+    justify-content: flex-end;
+
+    padding: 35px;
+    
+    font-size: 40px;
+    color: white;
+    font-family: 'hua';
+    font-weight: 100;
 }
 
 #titelbox {
@@ -38,9 +51,11 @@ h1 {
 
 #topbar {
     display: flex;
+    padding: 10px;
 }
 
 #sidebar {
     width: 500px;
     background-color: #287464;
+    height: 729px;
 }
