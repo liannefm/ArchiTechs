@@ -3,9 +3,15 @@
 <!-- Sidebar -->
 <div class="mySidebar" style="display:none" id="mySidebar">
     <div id="sidebar">
+
+        
         <div id="sidebar_box">
             <button onclick="sidebar_close()" class="close_button">&times;</button>
             <!-- hier komen de knoppen -->
+        </div>
+        <div id="sidebarbox">
+            <img src="includes/image/hualogo.png" id="imgsidebar" alt="hualogo">
+            <h2>Het Utrechts Archief</h2>
         </div>
     </div>
 </div>
