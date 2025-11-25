@@ -52,6 +52,9 @@ h1 {
   width: 435px;
   background-color: #287464;
   height: 729px;
+  box-shadow: 0 0 25px rgba(0,0,0,.4);
+  border-radius: 0 16px 16px 0;
+  padding-bottom: 20px;
 }
 
 #sidebar_box {
@@ -59,10 +62,22 @@ h1 {
   flex-direction: row-reverse;
 }
 
+#sidebarbox {
+  display: flex;
+  align-items: center;
+  padding: 25px 35px 10px 35px;
+}
+
 #imgsidebar {
-  width: 26%;
-  height: 100%;
-  padding-left: 35px;
+  width: 80px;
+  height: 80px;
+  padding: 0;
+  margin-right: 20px;
+}
+
+#sidebarbox h2 {
+  font-size: 36px;
+  line-height: 1.1;
 }
 
 .hamburger_menu {
@@ -88,23 +103,40 @@ h1 {
 
 h2,
 sidebar {
-  display: flex;
-  justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
 
-  padding: 35px;
+    padding-top: 4px;
 
-  font-size: 40px;
-  color: white;
+    color: white;
+    font-family: 'hua';
+    font-weight: 100;
+}
+
+#lightmode{
+    margin-top: 40px;
+}
+#hotspot, #lightmode{
+    font-size: 28px;
+    color: white;
+    font-family: 'hua';
+    margin-left: 35px;
+}
+.dropdown-btn{
+    font-size: 28px;
+    color: white;
+    font-family: 'hua';
+    margin-left: 35px;
+}
+
+#sidebar p {
+  margin-top: auto;
+  text-align: center;
+  font-size: 16px;
   font-family: 'hua';
-  font-weight: 100;
-}
-
-p,
-sidebar {
-  display: flex;
-  justify-content: center;
   color: white;
 }
+
 
 /* The switch - the box around the slider */
 .switch {
@@ -167,4 +199,73 @@ input:checked+.slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+
+
+
+
+
+
+
+/* Fixed sidenav, full height */
+/* .sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+} */
+
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn {
+  margin-top: 15px;
+  /* border-radius: 5px; */
+  font-size: 28px;
+  font-family: 'hua';
+  color: white;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* On mouse-over */
+.sidenav a:hover, .dropdown-btn:hover {
+  color: #f1f1f1;
+}
+
+/* Add an active class to the active dropdown button */
+.active {
+  background-color: #236456;
+  color: white;
+  border-radius: 5px;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+    display: none;
+    background-color: #236456;
+    margin-left: 35px;
+    width: 26%;
+    padding-left: 11px;
+    border-radius: 5px;
+}
+
+.dropdown-container a {
+  display: block;
+  padding: 5px 0;
+  margin-top: 10px;
+  color: white;
+  font-family: 'hua';
+  text-decoration: none;
+}
+
+#mySidebar {
+  position: fixed;
+  inset: 0;                 /* full-screen */
+  background: rgba(0,0,0,.4);  /* donkere overlay achter de sidebar */
 }
