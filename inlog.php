@@ -1,30 +1,34 @@
+<?php
+    include("includes/connection.php");
+    include("includes/header.php");
+?>
+
 <body>
 
 <h2>Login Form</h2>
 
 <div id="achtergrondInlog">
-    <form action="/action_page.php" method="post">
-    <div class="imgcontainer">
-        <img src="img_avatar2.png" alt="Avatar" class="avatar">
-    </div>
+    <form action="includes/insert_inlog.php" method="post">
+        <div class="imgcontainer">
+            <img src="includes/image/hualogo.png" alt="Avatar" class="avatar">
+        </div>
 
-    <div class="container">
-        <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="uname" required>
+        <div class="container">
+            <label for="username"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="username" required>
 
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
-            
-        <button type="submit">Login</button>
-        <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-        </label>
-    </div>
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="wachtwoord" required>
+                
+            <button type="submit" id="loginbtn">Login</button>
+            <label>
+            <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+        </div>
 
-    <div class="container" style="background-color:#f1f1f1">
-        <button type="button" class="cancelbtn">Cancel</button>
-        <span class="psw">Forgot <a href="#">password?</a></span>
-    </div>
+        <div id="cancelbtnBox">
+            <button type="button" class="cancelbtn">Cancel</button>
+        </div>
     </form>
 </div>
 

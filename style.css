@@ -251,7 +251,7 @@ sidebar {
   box-sizing: border-box;
 }
 
-#achtergrondInlog button {
+#loginbtn {
   background-color: #04AA6D;
   color: white;
   padding: 14px 20px;
@@ -277,12 +277,13 @@ sidebar {
 }
 
 img.avatar {
-  width: 40%;
+  width: 110px;
   border-radius: 50%;
 }
 
-.container {
+#cancelbtnBox {
   padding: 16px;
+  background-color: #f1f1f1;
 }
 
 #achtergrondInlog span.psw {
