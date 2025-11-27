@@ -5,7 +5,7 @@
 
 <body>
 
-<h2>Login Form</h2>
+<h2>Register Form</h2>
 
 <div id="achtergrondInlog_register">
     <form action="includes/insert_inlog.php" method="post">
@@ -23,7 +23,7 @@
             <label for="password"><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="password" required>
                 
-            <button type="submit" id="loginbtn">Login</button>
+            <button type="submit" id="loginbtn">Register</button>
             <label>
             <input type="checkbox" checked="checked" name="remember"> Remember me
             </label>
