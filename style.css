@@ -29,7 +29,7 @@ h1 {
 #titelbox {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: auto;
   height: 50px;
   border-radius: 10px;
   padding: 10px;
@@ -37,12 +37,16 @@ h1 {
   background-color: #287464;
 }
 
-#topbar {
-  display: flex;
-  padding: 10px;
+.hamburger_box {
+  padding-right: 350px;
 }
 
-.topbarfix{
+#topbar {
+  display: flex;
+  padding-bottom: 50px;
+}
+
+.topbarfix {
   display: flex;
 }
 
@@ -51,6 +55,7 @@ h1 {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, .4);
+  z-index: 999;
 }
 
 #sidebar {
@@ -60,6 +65,7 @@ h1 {
   box-shadow: 0 0 25px rgba(0, 0, 0, .4);
   border-radius: 0 16px 16px 0;
   padding-bottom: 20px;
+  z-index: 1000;
 }
 
 #sidebar_box {
@@ -309,10 +315,13 @@ img.avatar {
 }
 
 /* styling leporello */
-main .panorama {
+.panorama {
   display: flex;
   flex-direction: row;
-  position: absolute;
   height: 500px;
   overflow-y: scroll;
+}
+
+#laparello_box {
+  display: block;
 }
