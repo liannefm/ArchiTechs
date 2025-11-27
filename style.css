@@ -15,6 +15,8 @@
   width: 100%;
   min-height: 600px;
   height: auto;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 h1 {
@@ -27,7 +29,7 @@ h1 {
 #titelbox {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: auto;
   height: 50px;
   border-radius: 10px;
   padding: 10px;
@@ -35,9 +37,17 @@ h1 {
   background-color: #287464;
 }
 
+.hamburger_box {
+  padding-right: 350px;
+}
+
 #topbar {
   display: flex;
-  padding: 10px;
+  padding-bottom: 50px;
+}
+
+.topbarfix {
+  display: flex;
 }
 
 /* sidebar begin */
@@ -45,6 +55,7 @@ h1 {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, .4);
+  z-index: 999;
 }
 
 #sidebar {
@@ -54,6 +65,7 @@ h1 {
   box-shadow: 0 0 25px rgba(0, 0, 0, .4);
   border-radius: 0 16px 16px 0;
   padding-bottom: 20px;
+  z-index: 1000;
 }
 
 #sidebar_box {
@@ -305,4 +317,16 @@ img.avatar {
   .cancelbtn {
     width: 100%;
   }
+}
+
+/* styling leporello */
+.panorama {
+  display: flex;
+  flex-direction: row;
+  height: 500px;
+  overflow-y: scroll;
+}
+
+#laparello_box {
+  display: block;
 }
