@@ -13,20 +13,20 @@
             <img src="includes/image/hualogo.png" id="imgsidebar" alt="hualogo">
             <h2>Het Utrechts Archief</h2>
         </div>
+        
             <div id="lightmode">lightmode<label class="switch"><input type="checkbox"><span class="slider round"></span></label></div><br>
             <div id="hotspot">hotspot<label class="switch"><input type="checkbox"><span class="slider round"></span></label></div>
 
         <button class="dropdown-btn">talen 
-            <i class="fa fa-caret-down"></i>
+            <i class="fas fa-chevron-down"></i>
         </button>
         <div class="dropdown-container">
             <a href="#">Nederlands</a>
             <a href="#">Engels</a>
-            <a href="#">Duits</a>
         </div><br>
 
         <button class="dropdown-btn">tekstgrootte 
-            <i class="fa fa-caret-down"></i>
+            <i class="fas fa-chevron-down"></i>
         </button>
         <div class="dropdown-container">
             <a href="#">klein</a>
@@ -39,8 +39,10 @@
 </div>
 
 <!-- Page Content -->
-<div class="hamburger_box">
-  <button class="hamburger_menu" onclick="sidebar_open()">☰</button>
+<div class="topbarfix">
+  <div class="hamburger_box">
+    <button class="hamburger_menu" onclick="sidebar_open()">☰</button>
+  </div>
 </div>
 
 <script>
