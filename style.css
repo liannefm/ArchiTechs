@@ -237,6 +237,10 @@ sidebar {
 
 /* begin inlog pagina */
 
+#achtergrondInlog {
+  padding: 10px;
+}
+
 #achtergrondInlog form {
   border: 3px solid #f1f1f1;
 }
