@@ -9,7 +9,7 @@
 
 <div id="achtergrondInlog_register">
     <form action="includes/check_inlog.php" method="post">
-        <div class="imgcontainer">
+        <div class="avatar_container">
             <img src="includes/image/hualogo.png" alt="Avatar" class="avatar">
         </div>
 

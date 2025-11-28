@@ -289,7 +289,7 @@ sidebar {
   background-color: #f44336;
 }
 
-.imgcontainer {
+.avatar_container {
   text-align: center;
   margin: 24px 0 12px 0;
 }
@@ -322,6 +322,66 @@ img.avatar {
 }
 
 /* einde inlog pagina responsive */
+
+/* begin crud_home.php */
+#achtergrond_crud_home {
+  display: flex;
+  width: 100%;
+  min-height: 600px;
+  height: auto;
+  flex-wrap: wrap;
+  flex-direction: column;
+  background-color: #626a69;
+}
+
+#crud_home_sidebar {
+  width: 435px;
+  display: flex;
+  background-color: #287464;
+  height: 100%;
+  box-shadow: 0 0 25px rgba(0, 0, 0, .4);
+  border-radius: 0 16px 16px 0;
+  padding-bottom: 20px;
+  z-index: 1000;
+  flex-direction: column;
+}
+
+#crud_home_sidebar h2 {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 4px;
+  color: white;
+  font-family: 'hua';
+  font-weight: 100;
+}
+
+#crud_home_sidebar p {
+  margin-top: auto;
+  text-align: center;
+  font-size: 16px;
+  font-family: 'hua';
+  color: white;
+}
+
+.crud_home_avatar_container {
+  text-align: center;
+  margin: -10px 0 12px 0;
+}
+
+.inlog_gegevens_box {
+  height: auto;
+}
+
+#username p {
+  font-size: 26px;
+}
+
+#email p {
+  font-size: 22px;
+  padding-top: 10px;
+}
+
+/* einde crud_home.php */
 
 /* styling leporello */
 .panorama {

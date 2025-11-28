@@ -16,9 +16,15 @@
 
         // Wachtwoord check
         if (password_verify($password, $user['password'])) {
-            echo "Login succesvol, welkom " . htmlspecialchars($user['username']);
+            
+            $_SESSION['user_id']   = $user['id'] ?? null;
+            $_SESSION['username']  = $user['username'] ?? null;
+            $_SESSION['logged_in'] = true;
 
-            header("Location: crud_home.php");
+            // Redirect naar goede pagina (één map omhoog)
+            header("Location: ../crud_home.php");
+            exit;
+
         } else {
             echo "Wachtwoord is onjuist";
         }
