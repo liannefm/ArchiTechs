@@ -8,14 +8,14 @@
 <h2>Login Form</h2>
 
 <div id="achtergrondInlog_register">
-    <form action="includes/insert_inlog.php" method="post">
+    <form action="includes/check_inlog.php" method="post">
         <div class="imgcontainer">
             <img src="includes/image/hualogo.png" alt="Avatar" class="avatar">
         </div>
 
         <div class="container">
-            <label for="username"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" required>
+            <!-- <label for="username"><b>Username</b></label>
+            <input type="text" placeholder="Enter Username" name="username" required> -->
 
             <label for="email"><b>E-mail</b></label>
             <input type="email" placeholder="Enter E-mail" name="email" required>
