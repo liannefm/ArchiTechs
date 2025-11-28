@@ -1,30 +1,39 @@
 <?php
-    include("includes/connection.php");
+    include("connection.php");
 
-    if($_SERVER["REQUEST_METHODE"] == "POST"){
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-        $username = mysqli_real_escape_string($conn, $_POST['username']);
-        $email = mysqli_real_escape_string($conn, $_POST['email']);
-        $password = mysqli_real_escape_string($conn, $_POST['password']);
+        $username = $_POST['username'] ?? '';
+        $email    = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
         
-        $checkEmail = "SELECT * FROM users WHERE email='$email'";
-        $result = $conn->query($checkEmail);
+        // 1. Check of e-mail al bestaat
+        $checkSql = "SELECT 1 FROM inlog_gegevens WHERE email = :email";
+        $stmt = $conn->prepare($checkSql);
+        $stmt->execute([':email' => $email]);
 
-        if ($result->num_rows > 0){
+         if ($stmt->fetch()) {
             echo "E-mail heeft al een account";
         } else {
-            echo "Maak nu een acount"
-
-
+            
             $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-            $sql = "INSERT INTO inlog_gegevens(username, email, password) VALUES ('$username','$email','$hashed_password')"
+            $insertSql= "INSERT INTO inlog_gegevens(username, email, password) VALUES (:username, :email, :password)";
+
+            $insert = $conn->prepare($insertSql);
+
+            $success = $insert->execute([
+            ':username' => $username,
+            ':email'    => $email,
+            ':password' => $hashed_password
+            ]);
         
-            if($conn->query($sql)===TRUE){
-                echo "Account gemaakt"
-            }  else{
-                echo "Error"  .$sql.$conn->error;
-            }  
+            if ($success) {
+            echo "Account gemaakt";
+            } else {
+                $errorInfo = $insert->errorInfo();
+                echo "Error bij invoegen: " . $errorInfo[2];
+            }
         }
     }
 

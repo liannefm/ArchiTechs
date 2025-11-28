@@ -8,7 +8,7 @@
 <h2>Register Form</h2>
 
 <div id="achtergrondInlog_register">
-    <form action="includes/insert_inlog.php" method="post">
+    <form action="includes/insert_register.php" method="post">
         <div class="imgcontainer">
             <img src="includes/image/hualogo.png" alt="Avatar" class="avatar">
         </div>
