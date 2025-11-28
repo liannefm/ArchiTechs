@@ -42,6 +42,7 @@ h1 {
 }
 
 #topbar {
+  position: fixed;
   display: flex;
   padding-bottom: 50px;
 }
@@ -61,11 +62,23 @@ h1 {
 #sidebar {
   width: 435px;
   background-color: #287464;
-  height: 729px;
+  height: 100%;
   box-shadow: 0 0 25px rgba(0, 0, 0, .4);
   border-radius: 0 16px 16px 0;
   padding-bottom: 20px;
   z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#sidebar p {
+  margin-top: auto;
+  text-align: center;
+  font-size: 16px;
+  font-family: 'hua';
+  color: white;
 }
 
 #sidebar_box {
@@ -99,6 +112,11 @@ h1 {
   background-color: #287464;
   color: white;
   border-radius: 0 0 15px 0;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
 }
 
 .close_button {
@@ -133,12 +151,23 @@ sidebar {
   margin-left: 35px;
 }
 
+#hotspot{
+  margin-bottom: 20px;
+}
+
 #sidebar p {
   margin-top: auto;
   text-align: center;
   font-size: 16px;
   font-family: 'hua';
   color: white;
+  align-items: baseline;
+  margin-bottom: 20px;
+}
+
+.dark-mode {
+  background-color: rgb(69, 69, 69);
+  color: rgb(255, 255, 255);
 }
 
 /* Switch (toggle) */
@@ -203,7 +232,7 @@ sidebar {
 /* Sidenav links en dropdown */
 .sidenav a,
 .dropdown-btn {
-  margin-top: 15px;
+  /* margin-top: 15px; */
   border: none;
   background: none;
   cursor: pointer;
@@ -214,6 +243,7 @@ sidebar {
   font-size: 28px;
   font-family: 'hua';
   color: white;
+
 }
 
 .sidenav a:hover,
@@ -225,6 +255,10 @@ sidebar {
   background-color: #236456;
   color: white;
   border-radius: 5px;
+}
+
+.dropdown-btn.active i {
+  transform: rotate(90deg);
 }
 
 .dropdown-container {
@@ -243,6 +277,11 @@ sidebar {
   color: white;
   font-family: 'hua';
   text-decoration: none;
+}
+
+.dropdown-container a img {
+  margin-bottom: -5px;
+  height: 23px;
 }
 
 /* einde sidebar */
@@ -318,10 +357,65 @@ img.avatar {
 .panorama {
   display: flex;
   flex-direction: row;
-  height: 500px;
+  height: auto;
   overflow-y: scroll;
+  align-items: center;
 }
 
-#laparello_box {
+#zoomen{
+  display: flex;
+  position: fixed;
+  bottom: 15px;
+  left: 650px;
+  gap: 20px;
+  z-index: 35;
+}
+.cirkel{
+  display: flex;
+  height: 75px;
+  width: 75px;
+  background-color: #bbb;
+  border-radius: 50%;
+  background-color: #287464;
+  justify-content: center;
+  align-items: center;
+}
+
+.cirkel img {
+  width: 50px;
+  object-fit: contain;
   display: block;
+  color:white;
+}
+
+#verkleinglas{
+  width: 68px;
+}
+
+/* scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #287464;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background:  	#ffffff;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background:  	#ffffff;
+  border-radius: 10px;
+}
+
+.active {
+  color:  	#ffffff; /* jouw gele kleur */
+  font-weight: bold; /* optioneel, zodat het nóg meer opvalt */
 }
