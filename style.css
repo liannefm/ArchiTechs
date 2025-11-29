@@ -356,7 +356,6 @@ img.avatar {
 }
 
 #crud_home_sidebar p {
-  margin-top: auto;
   text-align: center;
   font-size: 16px;
   font-family: 'hua';
@@ -379,6 +378,22 @@ img.avatar {
 #email p {
   font-size: 22px;
   padding-top: 10px;
+}
+
+.logout_btn {
+  background-color: #d42c1c;
+  color: white;
+  width: 90px;
+  height: 35px;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#sidebar_footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 30px;
 }
 
 /* einde crud_home.php */

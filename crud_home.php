@@ -1,6 +1,11 @@
 <?php
+
+    session_start();
+
     include("includes/connection.php");
     include("includes/header.php");
+
+    if(!isset($_SESSION['user'])){}
 
 ?>
 
@@ -33,6 +38,12 @@
                     echo "Error: " . $e->getMessage();
                     }
                 ?>
+
+                <div id="sidebar_footer">
+                    <form action="includes/logout.php" method="POST">
+                        <button id="logout" class="logout_btn" type="submit">log uit</button>
+                    </form>
+                </div>
 
                 <p>&copy; 2025 Het Utrechts Archief</p>
             </div>
