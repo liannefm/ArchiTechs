@@ -1,4 +1,6 @@
 <?php
+    session_start();
+    
     include("connection.php");
 
 
@@ -21,8 +23,8 @@
             $_SESSION['username']  = $user['username'] ?? null;
             $_SESSION['logged_in'] = true;
 
-            // Redirect naar goede pagina (één map omhoog)
-            header("Location: ../crud_home.php");
+            $_SESSION['user'] = $user['email'];
+                header("Location: ../crud_home.php");
             exit;
 
         } else {

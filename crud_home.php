@@ -5,7 +5,9 @@
     include("includes/connection.php");
     include("includes/header.php");
 
-    if(!isset($_SESSION['user'])){}
+    if(!isset($_SESSION['user'])){
+        header("location: inlog.php");
+    }
 
 ?>
 
