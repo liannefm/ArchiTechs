@@ -13,29 +13,34 @@
                 </div>
                 <div id="sidebarbox">
                     <img src="includes/image/hualogo.png" id="imgsidebar" alt="hualogo">
-                    <h2>Het Utrechts Archief</h2>
+                    <h2 id="titel">Het Utrechts Archief</h2>
                 </div>
                 
-                    <div id="lightmode"><span>lightmode</span><label class="switch"><input onChange="toggleDarkMode()" type="checkbox"><span class="slider round"></span></label></div><br>
+                    <div id="lightmode"><span id="lichtmodus">lichtmodus</span><label class="switch"><input onChange="toggleDarkMode()" type="checkbox"><span class="slider round"></span></label></div><br>
+
                     <div id="hotspot">hotspot<label class="switch"><input type="checkbox"><span class="slider round"></span></label></div>
 
-                <button class="dropdown-btn">talen 
+                <button class="dropdown-btn">
+                    <span id="talen">talen</span>
                     <i class="fas fa-chevron-right"></i>
                 </button>
 
+
                 <div class="dropdown-container">
-                    <a href="#"><img src="includes/image/flags/netherlands.svg"> <span>Nederlands</span></a>
-                    <a href="#"><img src="includes/image/flags/united-kingdom.svg"> <span>Engels</span></a>
+
+                    <a href="#"><img src="includes/image/flags/netherlands.svg"> <button onclick="setLanguage('nl')" id="talenknopnl">Nederlands</button></a>
+                    <a href="#"><img src="includes/image/flags/united-kingdom.svg"> <button onclick="setLanguage('en')" id="talenknopen">Engels</button></a>
                 </div><br>
 
-                <button class="dropdown-btn">tekstgrootte 
+                <button class="dropdown-btn">
+                    <span id="tekstgrootte">tekstgrootte</span>
                     <i class="fas fa-chevron-right"></i>
                 </button>
 
                 <div class="dropdown-container">
-                    <a href="#">klein</a>
-                    <a href="#">middel</a>
-                    <a href="#">groot</a>
+                    <a href="#" id="klein">klein</a>
+                    <a href="#" id="middel">middel</a>
+                    <a href="#" id="groot">groot</a>
                 </div>
 
                 <p>&copy; 2025 Het Utrechts Archief</p>
@@ -47,11 +52,12 @@
                 <button class="hamburger_menu" onclick="sidebar_open()">☰</button>
             </div>
             <div id="titelbox">
-                <h1>De geschiedenis van Utrecht</h1>
+                <h1 id="titelpagina">De geschiedenis van Utrecht</h1>
             </div>
         </div>
 
-        <div class="panorama" style="margin-top: 110px;">
+        <div class="panorama-wrapper" style="margin-top: 110px;">
+            <div class="panorama">
             <img src="includes/image/panorama/1.jpg" alt="Panorama Image 1"
                 style="height: 500px; z-index: 1; margin-left: 0px; margin-top: 0px;">
             <img src="includes/image/panorama/2.jpg" alt="Panorama Image 2"
@@ -118,17 +124,23 @@
                 style="height: 535px; z-index: 31; margin-left: -48px; margin-top: -4px;">
             <img src="includes/image/panorama/33.jpg" alt="Panorama Image 33"
                 style="height: 539px; z-index: 33; margin-left: -45px; margin-top: -2px;">
+            </div>
         </div>
 
         <div id="zoomen">
-            <div class="cirkel">
-                <img src="includes/image/verkleinglas.png" alt="icon" id="verkleinglas">
-            </div>
+            <button class="cirkel" onclick="zoomOut()">
+                <img src="includes/image/verkleinglas.png" alt="uitzoomen" id="verkleinglas">
+            </button>
 
-            <div class="cirkel">
-                <img src="includes/image/vergrootglas.png" alt="icon">
-            </div>
+            <button class="cirkel" onclick="zoomIn()">
+                <img src="includes/image/vergrootglas.png" alt="inzoomen">
+            </button>
+
+            <button class="cirkel" onclick="resetZoom()">
+                <span style="font-size: 32px; color: white;">↺</span>
+            </button>
         </div>
+
     </div>
 
 
@@ -159,12 +171,80 @@
 
     function toggleDarkMode() {
         var element = document.body;
-        const darkModeTextElement = document.querySelector('#lightmode span');
+        const darkModeTextElement = document.querySelector('#lichtmodus');
 
         element.classList.toggle("dark-mode");
-        darkModeTextElement.textContent = element.classList.contains('dark-mode') ? 'darkmode' : 'lightmode';
+        darkModeTextElement.textContent = element.classList.contains('dark-mode') ? 'donkere modus' : 'lichtmodus';
     }
 
+
+    let translations;
+
+    fetch("translations.json")
+    .then(res => res.json())
+    .then(data => {
+    translations = data;
+
+    const userLang = navigator.language.startsWith("nl") ? "nl" : "en";
+    setLanguage(userLang);
+    });
+
+    function setLanguage(lang) {
+    Object.entries(translations[lang]).forEach(([key, value]) => {
+        const selectedElement = document.getElementById(key);
+        if(selectedElement){
+        selectedElement.innerText = value;
+        }
+    });
+    }
+
+
+
+
+
+let zoomLevel = 1;          // start op 100%
+const minZoom = 0.6;        // minimale zoom
+const maxZoom = 2.5;        // maximale zoom
+const zoomStep = 0.1;       // hoeveel per klik
+
+// Pak alle panorama-afbeeldingen
+const panoramaImages = document.querySelectorAll('.panorama img');
+
+// Sla de originele hoogte op (één keer)
+panoramaImages.forEach(img => {
+    img.dataset.baseHeight = img.clientHeight; // bijvoorbeeld 500px
+});
+
+function applyZoom() {
+    panoramaImages.forEach(img => {
+        const base = parseFloat(img.dataset.baseHeight);
+        img.style.height = (base * zoomLevel) + 'px';
+    });
+}
+
+function zoomIn() {
+    if (zoomLevel < maxZoom) {
+        zoomLevel += zoomStep;
+        applyZoom();
+    }
+}
+
+function zoomOut() {
+    if (zoomLevel > minZoom) {
+        zoomLevel -= zoomStep;
+        applyZoom();
+    }
+}
+
+function resetZoom() {
+    zoomLevel = 1;          // terug naar standaard
+    applyZoom();            // hoogtes van de afbeeldingen resetten
+
+    const wrapper = document.querySelector('.panorama-wrapper');
+    wrapper.scrollLeft = 0; // terug naar begin van de panorama
+    wrapper.scrollTop = 0;  // naar boven
+    updateOverflow();       // overflow weer updaten (verticale scroll verbergen)
+}
 
 </script>
 

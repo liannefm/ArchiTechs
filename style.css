@@ -35,16 +35,27 @@ h1 {
   padding: 10px;
   margin-top: 10px;
   background-color: #287464;
+  flex: 1;
+  text-align: center;
+  margin-right: 80px;
+  justify-content: center;
 }
 
 .hamburger_box {
-  padding-right: 350px;
+  width: 80px;
+  display: flex;
+  justify-content: flex-start;
 }
 
 #topbar {
-  position: fixed;
   display: flex;
+  position: fixed;
+  align-items: center;
+
   padding-bottom: 50px;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
 
 .topbarfix {
@@ -112,10 +123,7 @@ h1 {
   background-color: #287464;
   color: white;
   border-radius: 0 0 15px 0;
-
-  position: fixed;
-  top: 0;
-  left: 0;
+  margin-top: -25px;
 
 }
 
@@ -284,6 +292,13 @@ sidebar {
   height: 23px;
 }
 
+#talenknopnl, #talenknopen{
+  background-color: #236456;
+  border: 0px;
+  color: white;
+  font-family: 'hua';
+}
+
 /* einde sidebar */
 
 /* begin inlog pagina */
@@ -354,19 +369,29 @@ img.avatar {
 }
 
 /* styling leporello */
+.panorama-wrapper {
+  /* width: 100%; */
+  height: 500px;     /* vaste hoogte van je kijkvenster */
+  overflow: auto;
+}
+
 .panorama {
-  display: flex;
+  display: inline-flex;   /* breedte past zich aan aan de inhoud */
   flex-direction: row;
-  height: auto;
-  overflow-y: scroll;
-  align-items: center;
+  align-items: flex-start;
+}
+
+.panorama img {
+  flex-shrink: 0;         /* voorkomt dat ze geplet worden als het kleiner wordt */
+  display: block;
 }
 
 #zoomen{
   display: flex;
   position: fixed;
   bottom: 15px;
-  left: 650px;
+  left: 50%;                 /* zet het midden van de knoppengroep op het midden van het scherm */
+  transform: translateX(-50%); /* verplaats de groep terug zodat hij precies gecentreerd is */
   gap: 20px;
   z-index: 35;
 }
@@ -379,6 +404,7 @@ img.avatar {
   background-color: #287464;
   justify-content: center;
   align-items: center;
+  border: 0px;
 }
 
 .cirkel img {
@@ -416,6 +442,6 @@ img.avatar {
 }
 
 .active {
-  color:  	#ffffff; /* jouw gele kleur */
-  font-weight: bold; /* optioneel, zodat het nóg meer opvalt */
+  color:  	#ffffff;
+  /* font-weight: bold; optioneel, zodat het nóg meer opvalt */
 }

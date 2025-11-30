@@ -1,12 +1,37 @@
 {
     "nl": {
-        "title": "Welkom",
-        "description": "Dit is mijn website.",
-        "test123": "test Nederlands"
+        "titel": "Het Utrechts Archief",
+
+        "lichtmodus": "lichtmodus",
+        "DarkMode": "donkere modus",
+
+        "talen": "talen",
+        "talenknopnl": "Nederlands",
+        "talenknopen": "Engels",
+
+        "tekstgrootte": "tekstgrootte",
+        "klein": "klein",
+        "middel": "middel",
+        "groot": "groot",
+
+        "titelpagina": "De geschiedenis van Utrecht"
     },
+
     "en": {
-        "title": "Welcome",
-        "description": "This is my website.",
-        "test123": "test Engels"
+        "titel": "The Utrecht Archives",
+
+        "lichtmodus": "lightmode",
+        "DarkMode": "darkmode",
+
+        "talen": "languages",
+        "talenknopnl": "Dutch",
+        "talenknopen": "English",
+
+        "tekstgrootte": "textsize",
+        "klein": "small",
+        "middel": "middle",
+        "groot": "big",
+
+        "titelpagina": "The history of Utrecht"
     }
 }
