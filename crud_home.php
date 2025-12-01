@@ -60,7 +60,42 @@ if (!isset($_SESSION['user'])) {
 
             <div id="crud_button_box">
 
+                <a href="index.php">
+                    <div class="KnoppenBox">
+                        Home pagina
+                    </div>
+                </a>
+
+                <a href="#" id="nl-knop">
+                    <div class="KnoppenBox">
+                        Nederlands opties
+                    </div>
+                </a>
+
+                <a href="#" id="en-knop">
+                    <div class="KnoppenBox">
+                        Engels opties
+                    </div>
+                </a>
+
             </div>
+
+        </div>
+
+        <div id="taal_content">
+
+            <!-- Nederlands pagina -->
+            <div id="inhoud-nl">
+                <p>Nederlands Beheersysteem</p>
+
+            </div>
+
+            <!-- Engels pagina -->
+            <div id="inhoud-en" style="display:none;">
+                <p>Engels Beheersysteem</p>
+
+            </div>
+
         </div>
     </div>
 
@@ -72,6 +107,24 @@ if (!isset($_SESSION['user'])) {
         function sidebar_close() {
             document.getElementById("mySidebar").style.display = "none";
         }
+
+        // Taal wisselen
+        const btnNl = document.getElementById('nl-knop');
+        const btnEn = document.getElementById('en-knop');
+        const contentNl = document.getElementById('inhoud-nl');
+        const contentEn = document.getElementById('inhoud-en');
+
+        btnNl.addEventListener('click', function(e) {
+            e.preventDefault();
+            contentNl.style.display = 'block';
+            contentEn.style.display = 'none';
+        });
+
+        btnEn.addEventListener('click', function(e) {
+            e.preventDefault();
+            contentNl.style.display = 'none';
+            contentEn.style.display = 'block';
+        });
     </script>
 
 </body>
