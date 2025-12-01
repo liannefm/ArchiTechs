@@ -1,13 +1,14 @@
 <?php
 
-    session_start();
+session_start();
 
-    include("includes/connection.php");
-    include("includes/header.php");
+include("includes/connection.php");
+include("includes/user_ingelogd.php");
+include("includes/header.php");
 
-    if(!isset($_SESSION['user'])){
-        header("location: inlog.php");
-    }
+if (!isset($_SESSION['user'])) {
+    header("location: inlog.php");
+}
 
 ?>
 
@@ -26,19 +27,19 @@
                 </div>
 
                 <?php
-                    try{
-                        $stmt = $conn->prepare("SELECT username, email FROM inlog_gegevens");
-                        $stmt->execute();
+                try {
+                    $stmt = $conn->prepare("SELECT username, email FROM inlog_gegevens");
+                    $stmt->execute();
 
-                        foreach ($stmt->fetchAll() as $k => $v) {
+                    foreach ($stmt->fetchAll() as $k => $v) {
                         echo "<div class='inlog_gegevens_box'>
                             <div id='username'><p>{$v['username']}</p></div>
                             <div id='email'><p>{$v['email']}</p></div>
                         </div>";
                     }
-                    } catch (PDOException $e){
+                } catch (PDOException $e) {
                     echo "Error: " . $e->getMessage();
-                    }
+                }
                 ?>
 
                 <div id="sidebar_footer">
@@ -51,24 +52,26 @@
             </div>
         </div>
 
-        <div id="topbar">
+        <div id="topbar_topbar">
+
             <div class="hamburger_box">
                 <button class="hamburger_menu" onclick="sidebar_open()">☰</button>
             </div>
-           
+
+            <div id="crud_button_box">
+
+            </div>
         </div>
     </div>
 
-<script>
+    <script>
+        function sidebar_open() {
+            document.getElementById("mySidebar").style.display = "block";
+        }
 
-    function sidebar_open() {
-        document.getElementById("mySidebar").style.display = "block";
-    }
-
-    function sidebar_close() {
-        document.getElementById("mySidebar").style.display = "none";
-    }
-
-</script>
+        function sidebar_close() {
+            document.getElementById("mySidebar").style.display = "none";
+        }
+    </script>
 
 </body>

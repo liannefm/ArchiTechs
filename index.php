@@ -1,5 +1,5 @@
 <?php
-    include("includes/header.php");
+include("includes/header.php");
 ?>
 
 <body>
@@ -16,11 +16,11 @@
                     <img src="includes/image/hualogo.png" id="imgsidebar" alt="hualogo">
                     <h2>Het Utrechts Archief</h2>
                 </div>
-                
-                    <div id="lightmode">lightmode<label class="switch"><input type="checkbox"><span class="slider round"></span></label></div><br>
-                    <div id="hotspot">hotspot<label class="switch"><input type="checkbox"><span class="slider round"></span></label></div>
 
-                <button class="dropdown-btn">talen 
+                <div id="lightmode">lightmode<label class="switch"><input type="checkbox"><span class="slider round"></span></label></div><br>
+                <div id="hotspot">hotspot<label class="switch"><input type="checkbox"><span class="slider round"></span></label></div>
+
+                <button class="dropdown-btn">talen
                     <i class="fas fa-chevron-down"></i>
                 </button>
 
@@ -29,7 +29,7 @@
                     <a href="#">Engels</a>
                 </div><br>
 
-                <button class="dropdown-btn">tekstgrootte 
+                <button class="dropdown-btn">tekstgrootte
                     <i class="fas fa-chevron-down"></i>
                 </button>
 
@@ -42,14 +42,14 @@
                 <p>&copy; 2025 Het Utrechts Archief</p>
             </div>
         </div>
-            <div id="topbar">
-                <div class="hamburger_box">
-                    <button class="hamburger_menu" onclick="sidebar_open()">☰</button>
-                </div>
-                <div id="titelbox">
-                    <h1>De geschiedenis van Utrecht</h1>
-                </div>
+        <div id="topbar">
+            <div class="hamburger_box">
+                <button class="hamburger_menu" onclick="sidebar_open()">☰</button>
             </div>
+            <div id="titelbox">
+                <h1>De geschiedenis van Utrecht</h1>
+            </div>
+        </div>
 
         <div class="panorama">
             <img src="includes/image/1.jpg" alt="Panorama Image 1"
@@ -122,31 +122,31 @@
     </div>
 
 
-<script>
-    function sidebar_open() {
-        document.getElementById("mySidebar").style.display = "block";
-    }
-
-    function sidebar_close() {
-        document.getElementById("mySidebar").style.display = "none";
-    }
-
-    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-    var dropdown = document.getElementsByClassName("dropdown-btn");
-    var i;
-
-    for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var dropdownContent = this.nextElementSibling;
-
-        if (dropdownContent.style.display === "block") {
-            dropdownContent.style.display = "none";
-        } else {
-            dropdownContent.style.display = "block";
+    <script>
+        function sidebar_open() {
+            document.getElementById("mySidebar").style.display = "block";
         }
-    });
-    }
-</script>
+
+        function sidebar_close() {
+            document.getElementById("mySidebar").style.display = "none";
+        }
+
+        /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+    </script>
 
 </body>
