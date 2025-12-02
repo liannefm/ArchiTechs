@@ -10,11 +10,21 @@
   font-style: normal;
 }
 
+html {
+  font-size: 16px;
+}
+
+body {
+  font-size: 1rem;
+}
+
 #achtergrond {
   display: flex;
   width: 100%;
   min-height: 600px;
   height: auto;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 h1 {
@@ -22,22 +32,43 @@ h1 {
   font-family: 'hua';
   font-weight: 100;
   color: white;
+  font-size: 3.25rem;
 }
 
 #titelbox {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: auto;
   height: 50px;
   border-radius: 10px;
   padding: 10px;
   margin-top: 10px;
   background-color: #287464;
+  flex: 1;
+  text-align: center;
+  margin-right: 80px;
+  justify-content: center;
+}
+
+.hamburger_box {
+  width: 80px;
+  display: flex;
+  justify-content: flex-start;
 }
 
 #topbar {
   display: flex;
-  padding: 10px;
+  position: fixed;
+  align-items: center;
+
+  padding-bottom: 50px;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.topbarfix {
+  display: flex;
 }
 
 /* sidebar begin */
@@ -45,15 +76,29 @@ h1 {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, .4);
+  z-index: 999;
 }
 
 #sidebar {
   width: 435px;
   background-color: #287464;
-  height: 729px;
+  height: 100%;
   box-shadow: 0 0 25px rgba(0, 0, 0, .4);
   border-radius: 0 16px 16px 0;
   padding-bottom: 20px;
+  z-index: 1000;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#sidebar p {
+  margin-top: auto;
+  text-align: center;
+  font-size: 16px;
+  font-family: 'hua';
+  color: white;
 }
 
 #sidebar_box {
@@ -87,6 +132,8 @@ h1 {
   background-color: #287464;
   color: white;
   border-radius: 0 0 15px 0;
+  margin-top: -25px;
+
 }
 
 .close_button {
@@ -121,12 +168,23 @@ sidebar {
   margin-left: 35px;
 }
 
+#hotspot{
+  margin-bottom: 20px;
+}
+
 #sidebar p {
   margin-top: auto;
   text-align: center;
   font-size: 16px;
   font-family: 'hua';
   color: white;
+  align-items: baseline;
+  margin-bottom: 20px;
+}
+
+.dark-mode {
+  background-color: rgb(69, 69, 69);
+  color: rgb(255, 255, 255);
 }
 
 /* Switch (toggle) */
@@ -191,7 +249,7 @@ sidebar {
 /* Sidenav links en dropdown */
 .sidenav a,
 .dropdown-btn {
-  margin-top: 15px;
+  /* margin-top: 15px; */
   border: none;
   background: none;
   cursor: pointer;
@@ -215,6 +273,10 @@ sidebar {
   border-radius: 5px;
 }
 
+.dropdown-btn.active i {
+  transform: rotate(90deg);
+}
+
 .dropdown-container {
   display: none;
   background-color: #236456;
@@ -231,6 +293,18 @@ sidebar {
   color: white;
   font-family: 'hua';
   text-decoration: none;
+}
+
+.dropdown-container a img {
+  margin-bottom: -5px;
+  height: 23px;
+}
+
+#talenknopnl, #talenknopen{
+  background-color: #236456;
+  border: 0px;
+  color: white;
+  font-family: 'hua';
 }
 
 /* einde sidebar */
@@ -290,7 +364,6 @@ img.avatar {
   padding-top: 16px;
 }
 
-/* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
   #achtergrondInlog span.psw {
     display: block;
@@ -300,4 +373,81 @@ img.avatar {
   .cancelbtn {
     width: 100%;
   }
+}
+
+/* styling leporello */
+.panorama-wrapper {
+  /* width: 100%; */
+  height: 500px;
+  overflow: auto;
+}
+
+.panorama {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.panorama img {
+  flex-shrink: 0;
+  display: block;
+}
+
+#zoomen{
+  display: flex;
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  gap: 20px;
+  z-index: 35;
+}
+.cirkel{
+  display: flex;
+  height: 75px;
+  width: 75px;
+  background-color: #bbb;
+  border-radius: 50%;
+  background-color: #287464;
+  justify-content: center;
+  align-items: center;
+  border: 0px;
+}
+
+.cirkel img {
+  width: 50px;
+  object-fit: contain;
+  display: block;
+  color:white;
+}
+
+#verkleinglas{
+  width: 68px;
+}
+
+/* scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #287464;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background:  	#ffffff;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background:  	#ffffff;
+  border-radius: 10px;
+}
+
+.active {
+  color:  	#ffffff;
 }
