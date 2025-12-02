@@ -10,6 +10,14 @@
   font-style: normal;
 }
 
+html {
+  font-size: 16px;
+}
+
+body {
+  font-size: 1rem;
+}
+
 #achtergrond {
   display: flex;
   width: 100%;
@@ -24,6 +32,7 @@ h1 {
   font-family: 'hua';
   font-weight: 100;
   color: white;
+  font-size: 3.25rem;
 }
 
 #titelbox {
@@ -251,7 +260,6 @@ sidebar {
   font-size: 28px;
   font-family: 'hua';
   color: white;
-
 }
 
 .sidenav a:hover,
@@ -356,7 +364,6 @@ img.avatar {
   padding-top: 16px;
 }
 
-/* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
   #achtergrondInlog span.psw {
     display: block;
@@ -371,18 +378,18 @@ img.avatar {
 /* styling leporello */
 .panorama-wrapper {
   /* width: 100%; */
-  height: 500px;     /* vaste hoogte van je kijkvenster */
+  height: 500px;
   overflow: auto;
 }
 
 .panorama {
-  display: inline-flex;   /* breedte past zich aan aan de inhoud */
+  display: inline-flex;
   flex-direction: row;
   align-items: flex-start;
 }
 
 .panorama img {
-  flex-shrink: 0;         /* voorkomt dat ze geplet worden als het kleiner wordt */
+  flex-shrink: 0;
   display: block;
 }
 
@@ -390,8 +397,8 @@ img.avatar {
   display: flex;
   position: fixed;
   bottom: 15px;
-  left: 50%;                 /* zet het midden van de knoppengroep op het midden van het scherm */
-  transform: translateX(-50%); /* verplaats de groep terug zodat hij precies gecentreerd is */
+  left: 50%;
+  transform: translateX(-50%);
   gap: 20px;
   z-index: 35;
 }
@@ -443,5 +450,4 @@ img.avatar {
 
 .active {
   color:  	#ffffff;
-  /* font-weight: bold; optioneel, zodat het nóg meer opvalt */
 }

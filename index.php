@@ -137,7 +137,7 @@
             </button>
 
             <button class="cirkel" onclick="resetZoom()">
-                <span style="font-size: 32px; color: white;">↺</span>
+                <span style="font-size: 50px; color: white;">↺</span>
             </button>
         </div>
 
@@ -245,6 +245,48 @@ function resetZoom() {
     wrapper.scrollTop = 0;  // naar boven
     updateOverflow();       // overflow weer updaten (verticale scroll verbergen)
 }
+
+// lettergroottes
+function setFontSize(size) {
+    const body = document.body;
+
+    body.classList.remove('font-small', 'font-medium', 'font-large');
+
+    if (size === 'small') {
+        body.classList.add('font-small');
+    } else if (size === 'medium') {
+        body.classList.add('font-medium');
+    } else if (size === 'large') {
+        body.classList.add('font-large');
+    }
+
+    localStorage.setItem('fontSize', size);
+}
+
+document.getElementById('klein').addEventListener('click', function (e) {
+    e.preventDefault();
+    setFontSize('small');
+});
+
+document.getElementById('middel').addEventListener('click', function (e) {
+    e.preventDefault();
+    setFontSize('medium');
+});
+
+document.getElementById('groot').addEventListener('click', function (e) {
+    e.preventDefault();
+    setFontSize('large');
+});
+
+window.addEventListener('DOMContentLoaded', function () {
+    const savedSize = localStorage.getItem('fontSize');
+    if (savedSize) {
+        setFontSize(savedSize);
+    } else {
+        setFontSize('medium');
+    }
+});
+
 
 </script>
 

@@ -1,14 +1,11 @@
 {
     "nl": {
         "titel": "Het Utrechts Archief",
-
         "lichtmodus": "lichtmodus",
         "DarkMode": "donkere modus",
-
         "talen": "talen",
         "talenknopnl": "Nederlands",
         "talenknopen": "Engels",
-
         "tekstgrootte": "tekstgrootte",
         "klein": "klein",
         "middel": "middel",
@@ -19,14 +16,11 @@
 
     "en": {
         "titel": "The Utrecht Archives",
-
         "lichtmodus": "lightmode",
         "DarkMode": "darkmode",
-
         "talen": "languages",
         "talenknopnl": "Dutch",
         "talenknopen": "English",
-
         "tekstgrootte": "textsize",
         "klein": "small",
         "middel": "middle",
