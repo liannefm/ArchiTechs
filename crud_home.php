@@ -54,8 +54,8 @@ if (!isset($_SESSION['user'])) {
 
         <div id="topbar_topbar">
 
-            <div class="hamburger_box">
-                <button class="hamburger_menu" onclick="sidebar_open()">☰</button>
+            <div class="crud_hamburger_box">
+                <button class="crud_hamburger_menu" onclick="sidebar_open()">☰</button>
             </div>
 
             <div id="crud_button_box">
@@ -88,6 +88,32 @@ if (!isset($_SESSION['user'])) {
             <div id="inhoud-nl">
                 <p>Nederlands Beheersysteem</p>
 
+                <?php
+
+                try {
+                    $stmt = $conn->prepare("SELECT * FROM panorama");
+                    $stmt->execute();
+
+                ?>
+                    <div id="panorama_manager">
+                        <?php
+                        foreach ($stmt->fetchAll() as $k => $v) {
+                            echo "<div class='pagina_gegevens'>
+                            <a href='detail.php?id={$v['id']}'>
+                            <img src='{$v['pagina_foto']}' alt='{$v['titel']}'>
+                            <p>{$v['pagina_nummer']}</p>
+                            </a>
+                            </div>";
+                        }
+                        ?>
+                    </div>
+                <?php
+
+                } catch (PDOException $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+
+                ?>
             </div>
 
             <!-- Engels pagina -->
