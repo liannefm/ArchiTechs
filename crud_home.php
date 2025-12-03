@@ -66,13 +66,19 @@ if (!isset($_SESSION['user'])) {
                     </div>
                 </a>
 
-                <a href="#" id="nl-knop">
-                    <div class="KnoppenBox">
-                        Nederlands opties
-                    </div>
-                </a>
+                <div class="crud_dropdown_box">
+                    <button class="crud_dropdown_btn">
+                        <i class="fas fa-chevron-right"></i>
+                        <span id="tekstgrootte">Nederlands opties</span>
+                    </button>
 
-                <a href="#" id="en-knop">
+                    <div class="crud_dropdown_container">
+                        <a href="#" id="NaarPanoramaNl">panorama pagina's</a>
+                        <a href="#" id="NaarAanvullendNl">aanvullende pagina's</a>
+                    </div>
+                </div>
+
+                <a href="#" id="NaarPanoramaEn">
                     <div class="KnoppenBox">
                         Engels opties
                     </div>
@@ -84,10 +90,8 @@ if (!isset($_SESSION['user'])) {
 
         <div id="taal_content">
 
-            <!-- Nederlands pagina -->
-            <div id="inhoud-nl">
-                <p>Nederlands Beheersysteem</p>
-
+            <!-- panoramaNl pagina -->
+            <div id="InhoudPanoramaNl">
                 <?php
 
                 try {
@@ -99,18 +103,63 @@ if (!isset($_SESSION['user'])) {
                         <?php
                         foreach ($stmt->fetchAll() as $k => $v) {
                             echo "<div class='pagina_gegevens'>
-                                <a href='manager_detail.php?id={$v['id']}'>
-                                <img src='{$v['pagina_foto']}' alt='{$v['titel']}'>
-                                <p class='pagina_nummers'>pagina {$v['pagina_nummer']}</p>
-                                <p class='catalogusnummers'>{$v['catalogusnummer']}</p>
-                                <p class='titels'>{$v['titel']}</p>
-                                </a>
+                            <img src='{$v['pagina_foto']}' alt='{$v['titel']}'>
+                            <p class='pagina_nummers'>pagina {$v['pagina_nummer']}</p>
+                            <p class='catalogusnummers'>{$v['catalogusnummer']}</p>
+                            <p class='titels'>{$v['titel']}</p>
+                            
+                            <a href='edit_panorama.php?id={$v['id']}'>
+                                <div class='CrudKnoppen'>
+                                    Bewerken
+                                </div>
+                            </a>
+                            <a href='manager_detail.php?id={$v['id']}'>
+                                <div class='CrudKnoppen'>
+                                    detail
+                                </div>
+                            </a>
+                            </div>";
+                        }
+                        ?>
+                    </div>
+                <?php
 
-                                <a href='edit_panorama.php?id={$v['id']}'>
-                                    <div class='CrudKnoppen'>
-                                        Bewerken
-                                    </div>
-                                </a>
+                } catch (PDOException $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+
+                ?>
+            </div>
+
+            <!-- InhoudAanvullendNl pagina -->
+            <div id="InhoudAanvullendNl" style="display:none;">
+                <h2>InhoudAanvullendNl</h2>
+                <?php
+
+                try {
+                    $stmt = $conn->prepare("SELECT * FROM extra_info");
+                    $stmt->execute();
+
+                ?>
+                    <div id="panorama_manager">
+                        <?php
+                        foreach ($stmt->fetchAll() as $k => $v) {
+                            echo "<div class='pagina_gegevens'>
+                            <img src='{$v['foto']}' alt='catalogusnummer: {$v['catalogusnummer']}'>
+                            <p class='pagina_nummers'>pagina {$v['pagina_nummer']}</p>
+                            <p class='catalogusnummers'>{$v['catalogusnummer']}</p>
+                            <p class='titels'>{$v['aanvullende_info']}</p>
+                            
+                            <a href='edit_aanvullendNl.php?id={$v['id']}'>
+                                <div class='CrudKnoppen'>
+                                    Bewerken
+                                </div>
+                            </a>
+                            <a href='manager_detail.php?id={$v['id']}'>
+                                <div class='CrudKnoppen'>
+                                    detail
+                                </div>
+                            </a>
                             </div>";
                         }
                         ?>
@@ -125,39 +174,103 @@ if (!isset($_SESSION['user'])) {
             </div>
 
             <!-- Engels pagina -->
-            <div id="inhoud-en" style="display:none;">
+            <div id="InhoudPanoramaEn" style="display:none;">
                 <p>Engels Beheersysteem</p>
-
             </div>
 
         </div>
     </div>
 
     <script>
+        // laat de sidebar zien
         function sidebar_open() {
             document.getElementById("mySidebar").style.display = "block";
         }
 
+        // laat de sidebar niet meer zien
         function sidebar_close() {
             document.getElementById("mySidebar").style.display = "none";
         }
 
-        // Taal wisselen
-        const btnNl = document.getElementById('nl-knop');
-        const btnEn = document.getElementById('en-knop');
-        const contentNl = document.getElementById('inhoud-nl');
-        const contentEn = document.getElementById('inhoud-en');
 
-        btnNl.addEventListener('click', function(e) {
+        function setSection(section) {
+            const sections = ['PanoramaNl', 'AanvullendNl', 'PanoramaEn'];
+
+            sections.forEach(name => {
+                const el = document.getElementById('Inhoud' + name);
+                if (!el) return;
+
+                if (name === section) {
+                    el.style.display = 'block';
+                } else {
+                    el.style.display = 'none';
+                }
+            });
+
+            // opslaan welke sectie actief is
+            localStorage.setItem('actieveSectie', section);
+        }
+
+        // pagina inhoud wisselen
+        const NaarPanoramaNl = document.getElementById('NaarPanoramaNl');
+        const NaarAanvullendNl = document.getElementById('NaarAanvullendNl');
+        const NaarPanoramaEn = document.getElementById('NaarPanoramaEn');
+
+        const InhoudPanoramaNl = document.getElementById('InhoudPanoramaNl');
+        const InhoudAanvullendNl = document.getElementById('InhoudAanvullendNl');
+        const InhoudPanoramaEn = document.getElementById('InhoudPanoramaEn');
+
+        // als je opnieuw laad juiste sectie kiezen
+        (function initSection() {
+            const saved = localStorage.getItem('actieveSectie');
+            if (saved === 'PanoramaNl' || saved === 'AanvullendNl' || saved === 'PanoramaEn') {
+                setSection(saved);
+            } else {
+                setSection('PanoramaNl'); // als er niks is opgeslagen gaat die naar deze
+            }
+        })();
+
+        // slaat op in welke sectie je zit
+        NaarPanoramaNl.addEventListener('click', function(e) {
             e.preventDefault();
-            contentNl.style.display = 'block';
-            contentEn.style.display = 'none';
+            setSection('PanoramaNl');
         });
 
-        btnEn.addEventListener('click', function(e) {
+        NaarAanvullendNl.addEventListener('click', function(e) {
             e.preventDefault();
-            contentNl.style.display = 'none';
-            contentEn.style.display = 'block';
+            setSection('AanvullendNl');
+        });
+
+        NaarPanoramaEn.addEventListener('click', function(e) {
+            e.preventDefault();
+            setSection('PanoramaEn');
+        });
+
+        // dropdown
+        var dropdown = document.getElementsByClassName("crud_dropdown_btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+
+        // sluit dropdown wanneer je op een optie klikt
+        const dropdownOptions = document.querySelectorAll(".crud_dropdown_container a");
+
+        dropdownOptions.forEach(option => {
+            option.addEventListener("click", function() {
+                this.parentElement.style.display = "none";
+                this.parentElement.previousElementSibling.classList.remove("active");
+            });
         });
     </script>
 

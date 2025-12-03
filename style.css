@@ -481,6 +481,10 @@ img.avatar {
   color: inherit;
 }
 
+#crud_button_box a:hover {
+  text-decoration: underline;
+}
+
 .KnoppenBox {
   display: flex;
   align-items: center;
@@ -490,6 +494,10 @@ img.avatar {
   padding: 5px;
   border: 3px solid rgb(192, 192, 192);
   transition: transform 0.2s ease-in-out;
+}
+
+.KnoppenBox:hover {
+  transform: scale(1.1);
 }
 
 .crud_hamburger_box {
@@ -517,14 +525,13 @@ img.avatar {
   width: 100%;
   height: auto;
   border: 3px solid #7952b3;
-  display: flex;
   padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .pagina_gegevens a {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   text-decoration: none;
   color: inherit;
 }
@@ -537,24 +544,85 @@ img.avatar {
 .pagina_nummers,
 .catalogusnummers {
   font-size: 20px;
-  padding-left: 150px;
 }
 
 .titels {
   font-size: 15px;
-  padding-left: 150px;
   width: 360px;
+  text-align: center;
 }
 
 .CrudKnoppen {
   display: flex;
   align-items: center;
+  justify-content: center;
+
   background-color: #247065;
-  width: auto;
+  border: 3px solid #16413b;
+  color: white;
+
+  width: 70px;
   height: 20px;
   padding: 5px;
-  border: 3px solid #16413b;
   transition: transform 0.2s ease-in-out;
+}
+
+.CrudKnoppen:hover {
+  transform: scale(1.1);
+}
+
+.crud_dropdown_box {
+  position: relative;
+  display: inline-block;
+}
+
+.crud_dropdown_btn {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  width: auto;
+  height: 40px;
+  padding: 15px;
+  border: none;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.crud_dropdown_btn.active {
+  background-color: #d42c1c;
+  color: white;
+  border-radius: 0;
+}
+
+.crud_dropdown_btn.active i {
+  transform: rotate(90deg);
+}
+
+.crud_dropdown_container {
+  background-color: #ffffff;
+  border: 3px solid #7952b3;
+  display: none;
+
+  position: absolute;
+  z-index: 999;
+  left: 0;
+  padding: 10px;
+  height: auto;
+  width: 137px;
+}
+
+.crud_dropdown_container a {
+  display: block;
+  padding: 5px 0;
+}
+
+#InhoudAanvullendNl h2 {
+  background-color: #247065;
+  color: white;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* einde crud_home.php */
