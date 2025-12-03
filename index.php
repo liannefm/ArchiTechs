@@ -36,17 +36,18 @@
                     <span id="tekstgrootte">tekstgrootte</span>
                     <i class="fas fa-chevron-right"></i>
                 </button>
-
+                
                 <div class="dropdown-container">
                     <a href="#" id="klein">klein</a>
                     <a href="#" id="middel">middel</a>
                     <a href="#" id="groot">groot</a>
                 </div>
-
+                
                 <p>&copy; 2025 Het Utrechts Archief</p>
             </div>
         </div>
-
+        
+<div id="panoramaknoppen">
         <div id="topbar">
             <div class="hamburger_box">
                 <button class="hamburger_menu" onclick="sidebar_open()">☰</button>
@@ -55,7 +56,6 @@
                 <h1 id="titelpagina">De geschiedenis van Utrecht</h1>
             </div>
         </div>
-
         <div class="panorama-wrapper" style="margin-top: 110px;">
             <div class="panorama">
             <img src="includes/image/panorama/1.jpg" alt="Panorama Image 1"
@@ -125,8 +125,8 @@
             <img src="includes/image/panorama/33.jpg" alt="Panorama Image 33"
                 style="height: 539px; z-index: 33; margin-left: -45px; margin-top: -2px;">
             </div>
-        </div>
 
+        </div>
         <div id="zoomen">
             <button class="cirkel" onclick="zoomOut()">
                 <img src="includes/image/verkleinglas.png" alt="uitzoomen" id="verkleinglas">
@@ -140,7 +140,8 @@
                 <span style="font-size: 50px; color: white;">↺</span>
             </button>
         </div>
-
+</div>      
+        
     </div>
 
 
@@ -286,7 +287,6 @@ window.addEventListener('DOMContentLoaded', function () {
         setFontSize('medium');
     }
 });
-
 
 </script>
 
