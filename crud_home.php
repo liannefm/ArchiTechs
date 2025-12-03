@@ -99,10 +99,18 @@ if (!isset($_SESSION['user'])) {
                         <?php
                         foreach ($stmt->fetchAll() as $k => $v) {
                             echo "<div class='pagina_gegevens'>
-                            <a href='detail.php?id={$v['id']}'>
-                            <img src='{$v['pagina_foto']}' alt='{$v['titel']}'>
-                            <p>{$v['pagina_nummer']}</p>
-                            </a>
+                                <a href='manager_detail.php?id={$v['id']}'>
+                                <img src='{$v['pagina_foto']}' alt='{$v['titel']}'>
+                                <p class='pagina_nummers'>pagina {$v['pagina_nummer']}</p>
+                                <p class='catalogusnummers'>{$v['catalogusnummer']}</p>
+                                <p class='titels'>{$v['titel']}</p>
+                                </a>
+
+                                <a href='edit_panorama.php?id={$v['id']}'>
+                                    <div class='CrudKnoppen'>
+                                        Bewerken
+                                    </div>
+                                </a>
                             </div>";
                         }
                         ?>
