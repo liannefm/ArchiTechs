@@ -2,6 +2,8 @@
 include("includes/connection.php");
 include("includes/user_ingelogd.php");
 include("includes/header.php");
+include("includes/topbar_crud.php");
+
 
 try {
     $stmt = $conn->prepare("SELECT id, pagina_foto, pagina_nummer, catalogusnummer, titel, beschrijving, opmerking, soort_negatief FROM panorama");
@@ -39,6 +41,7 @@ if (isset($_GET['id'])) {
 <body>
 
     <div id="achtergrondEditPanorama">
+        <h2>Inhoud panorama Nl</h2>
 
         <form action="includes/update_panorama.php" method="POST">
 
@@ -63,27 +66,27 @@ if (isset($_GET['id'])) {
 
                     <div class=" formulier-box">
                         <p>Catalogusnummer: </p>
-                        <input type="text" id="catalogusnummer" name="catalogusnummer" value="<?= htmlspecialchars($catalogusnummer) ?>">
+                        <input type="number" id="catalogusnummer" name="catalogusnummer" value="<?= htmlspecialchars($catalogusnummer) ?>">
                     </div>
 
                     <div class="formulier-box">
-                        <p>Pagina titel </p>
-                        <input type="text" id="pagina_titel" name="pagina_titel" value="<?= htmlspecialchars($titel) ?>">
+                        <p>Pagina titel:</p>
+                        <textarea id="pagina_titel" name="pagina_titel"><?= htmlspecialchars($titel) ?></textarea>
                     </div>
 
                     <div class="formulier-box">
                         <p>Beschrijving:</p>
-                        <textarea id="beschrijving" name="beschrijving" cols="26" rows="4"><?= htmlspecialchars($beschrijving) ?></textarea>
+                        <textarea id="beschrijving" name="beschrijving"><?= htmlspecialchars($beschrijving) ?></textarea>
                     </div>
 
                     <div class="formulier-box">
                         <p>opmerking:</p>
-                        <textarea id="opmerking" name="opmerking" cols="26" rows="4"><?= htmlspecialchars($opmerking) ?></textarea>
+                        <textarea id="opmerking" name="opmerking"><?= htmlspecialchars($opmerking) ?></textarea>
                     </div>
 
                     <div class="formulier-box">
-                        <p>Soort_negatief:</p>
-                        <textarea id="soort_negatief" name="soort_negatief" cols="26" rows="4"><?= htmlspecialchars($soort_negatief) ?></textarea>
+                        <p>Soort negatief:</p>
+                        <textarea id="soort_negatief" name="soort_negatief"><?= htmlspecialchars($soort_negatief) ?></textarea>
                     </div>
 
                     <br>

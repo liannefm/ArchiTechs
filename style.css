@@ -616,16 +616,115 @@ img.avatar {
   padding: 5px 0;
 }
 
-#InhoudAanvullendNl h2 {
+#InhoudAanvullendNl h2,
+#InhoudPanoramaNl h2,
+#achtergrondEditPanorama h2 {
   background-color: #247065;
   color: white;
   width: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 0 0 10px 10px;
+}
+
+.AchtergrondOverzicht {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 /* einde crud_home.php */
+
+/* begin edit_panorama */
+#achtergrondEditPanorama {
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+}
+
+#achtergrondEditPanorama form {
+  padding-top: 20px;
+}
+
+#Invulvelden {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#Invulvelden p {
+  text-align: center;
+  font-size: 17px;
+  padding-top: 15px;
+}
+
+.EditPanoramaBox {
+  border: 7px solid #7952b3;
+  background-color: #7952b346;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  padding: 40px
+}
+
+#soort_negatief,
+#beschrijving,
+#aanvullende_info,
+#soort_beeldmateriaal {
+  width: 380px;
+  height: 100px;
+  padding: 8px;
+  border: 4px solid #247065;
+  background-color: #2470656d;
+  color: white;
+}
+
+#opmerking {
+  width: 380px;
+  height: 150px;
+  padding: 8px;
+  border: 4px solid #247065;
+  background-color: #2470656d;
+  color: white;
+}
+
+#pagina_foto,
+#pagina_nummer,
+#catalogusnummer,
+#pagina_titel,
+#foto {
+  width: 380px;
+  height: 30px;
+  border: 4px solid #247065;
+  background-color: #2470656d;
+  color: white;
+  padding: 8px;
+}
+
+#SubmitKnop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #247065;
+  border: 3px solid #16413b;
+  color: white;
+
+  width: 80px;
+  height: 20px;
+  padding: 15px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.SubmitKnop:hover {
+  transform: scale(1.1);
+}
+
+/* eind edit_panorama */
 
 /* styling leporello */
 
@@ -639,10 +738,48 @@ img.avatar {
   display: inline-flex;
   flex-direction: row;
   align-items: flex-start;
+  position: relative;
 }
 
 .panorama img {
   flex-shrink: 0;
+  display: block;
+}
+
+.panorama .waypoint {
+  display: flex;
+  position: absolute;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 50px;
+  height: 50px;
+
+  background-color: rgba(40, 116, 100, 0.8);
+  border-radius: 50%;
+  z-index: 99;
+}
+
+.panorama .waypoint span {
+  font-size: 27px;
+  color: #fff;
+}
+
+.panorama .info {
+  display: none;
+  position: absolute;
+  width: 350px;
+  bottom: 50px;
+  left: 30px;
+
+  background-color: #fff;
+  padding: 8px;
+  border-radius: 20px;
+  border: 4px solid #287464;
+}
+
+.panorama .info.show {
   display: block;
 }
 
