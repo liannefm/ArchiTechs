@@ -16,7 +16,7 @@
                     <h2 id="titel">Het Utrechts Archief</h2>
                 </div>
                 
-                    <div id="lightmode"><span id="lichtmodus">lichtmodus</span><label class="switch"><input onChange="toggleDarkMode()" type="checkbox"><span class="slider round"></span></label></div><br>
+                    <div id="lightmode"><span id="lichtmodus" class="show">lichtmodus</span><span id="donkeremodus">donkere modus</span><label class="switch"><input onChange="toggleDarkMode()" type="checkbox"><span class="slider round"></span></label></div><br>
 
                     <div id="hotspot">hotspot<label class="switch"><input type="checkbox"><span class="slider round"></span></label></div>
 
@@ -56,10 +56,10 @@
                 <h1 id="titelpagina">De geschiedenis van Utrecht</h1>
             </div>
         </div>
-        <div class="panorama-wrapper" style="margin-top: 110px;">
+        <div class="panorama-wrapper" style="margin-top: 100px;">
             <div class="panorama">
             <img src="includes/image/panorama/1.jpg" alt="Panorama Image 1"
-                style="height: 500px; z-index: 1; margin-left: 0px; margin-top: 0px;">
+                style="height: 500px; z-index: 1; margin-left:  0px; margin-top: 0px;">
             <img src="includes/image/panorama/2.jpg" alt="Panorama Image 2"
                 style="height: 500px; z-index: 2; margin-left: 0px; margin-top: 0px;">
             <img src="includes/image/panorama/3.jpg" alt="Panorama Image 3"
@@ -137,7 +137,7 @@
             </button>
 
             <button class="cirkel" onclick="resetZoom()">
-                <span style="font-size: 50px; color: white;">↺</span>
+                <span style="font-size: 40px; color: white;">↺</span>
             </button>
         </div>
 </div>      
@@ -172,10 +172,17 @@
 
     function toggleDarkMode() {
         var element = document.body;
-        const darkModeTextElement = document.querySelector('#lichtmodus');
+        const lightModeTextElement = document.querySelector('#lichtmodus');
+        const darkModeTextElement = document.querySelector('#donkeremodus');
 
         element.classList.toggle("dark-mode");
-        darkModeTextElement.textContent = element.classList.contains('dark-mode') ? 'donkere modus' : 'lichtmodus';
+        if(element.classList.contains('dark-mode')){
+            lightModeTextElement.classList.remove('show');
+            darkModeTextElement.classList.add('show');
+        }else{
+            lightModeTextElement.classList.add('show');
+            darkModeTextElement.classList.remove('show');
+        }
     }
 
 
@@ -203,24 +210,16 @@
 
 
 
-let zoomLevel = 1;          // start op 100%
-const minZoom = 0.6;        // minimale zoom
-const maxZoom = 2.5;        // maximale zoom
-const zoomStep = 0.1;       // hoeveel per klik
+let zoomLevel = 1.1;        // start meteen 1 “klik” ingezoomd
+const minZoom = 0.6;
+const maxZoom = 2.5;
+const zoomStep = 0.1;
 
-// Pak alle panorama-afbeeldingen
-const panoramaImages = document.querySelectorAll('.panorama img');
-
-// Sla de originele hoogte op (één keer)
-panoramaImages.forEach(img => {
-    img.dataset.baseHeight = img.clientHeight; // bijvoorbeeld 500px
-});
+const panorama = document.querySelector('.panorama');
+const wrapper = document.querySelector('.panorama-wrapper');
 
 function applyZoom() {
-    panoramaImages.forEach(img => {
-        const base = parseFloat(img.dataset.baseHeight);
-        img.style.height = (base * zoomLevel) + 'px';
-    });
+    panorama.style.transform = `scale(${zoomLevel})`;
 }
 
 function zoomIn() {
@@ -238,14 +237,16 @@ function zoomOut() {
 }
 
 function resetZoom() {
-    zoomLevel = 1;          // terug naar standaard
-    applyZoom();            // hoogtes van de afbeeldingen resetten
+    zoomLevel = 1;
+    applyZoom();
 
-    const wrapper = document.querySelector('.panorama-wrapper');
-    wrapper.scrollLeft = 0; // terug naar begin van de panorama
-    wrapper.scrollTop = 0;  // naar boven
-    updateOverflow();       // overflow weer updaten (verticale scroll verbergen)
+    // terug naar begin van de panorama binnen het vak
+    wrapper.scrollLeft = 0;
+    wrapper.scrollTop = 0;
 }
+applyZoom();
+
+
 
 // lettergroottes
 function setFontSize(size) {
@@ -287,7 +288,6 @@ window.addEventListener('DOMContentLoaded', function () {
         setFontSize('medium');
     }
 });
-
 </script>
 
 </body>

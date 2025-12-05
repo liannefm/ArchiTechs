@@ -2,7 +2,7 @@
     "nl": {
         "titel": "Het Utrechts Archief",
         "lichtmodus": "lichtmodus",
-        "DarkMode": "donkere modus",
+        "donkeremodus": "donkere modus",
         "talen": "talen",
         "talenknopnl": "Nederlands",
         "talenknopen": "Engels",
@@ -17,7 +17,7 @@
     "en": {
         "titel": "The Utrecht Archives",
         "lichtmodus": "lightmode",
-        "DarkMode": "darkmode",
+        "donkeremodus": "darkmode",
         "talen": "languages",
         "talenknopnl": "Dutch",
         "talenknopen": "English",
