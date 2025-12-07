@@ -26,7 +26,7 @@ if (isset($_FILES['pagina_foto']) && $_FILES['pagina_foto']['error'] === UPLOAD_
     $customName = trim($_POST['bestandsnaam']);
 
     if ($customName === "") {
-        echo "Je moet een bestandsnaam invoeren!";
+        echo "Je moet een bestandsnaam invoeren";
         exit;
     }
 

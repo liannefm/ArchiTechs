@@ -706,24 +706,22 @@ img.avatar {
   padding: 8px;
 }
 
-/* #FotoUploadBox {
+#FotoUploadBox {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-wrap: wrap;
 
-  width: 380px;
+  width: 400px;
   height: auto;
   padding: 8px;
 
   border: 4px solid #247065;
-  background-color: #2470656d;
-  color: white;
-} */
+}
 
 #FotoUploadBox input[type="file"]::file-selector-button {
-  background-color: #566ccc9b;
-  border: 3px solid #566bcc;
+  background-color: #247065;
+  border: 3px solid #16413b;
   color: white;
   padding: 5px;
 }
