@@ -825,7 +825,7 @@ img.avatar {
 
   background-color: rgba(40, 116, 100, 0.8);
   border-radius: 50%;
-  z-index: 99;
+  z-index: 999;
 }
 
 .panorama .waypoint span {

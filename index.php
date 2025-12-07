@@ -138,14 +138,15 @@ include("includes/header.php");
                         style="height: 535px; z-index: 31; margin-left: -48px; margin-top: -4px;">
                     <img src="includes/image/panorama/33.jpg" alt="Panorama Image 33"
                         style="height: 539px; z-index: 33; margin-left: -45px; margin-top: -2px;">
-                </div>
 
-                <div class="waypoint" style="top: 180px; left: 120px;">
-                    <span><i class="fa-solid fa-question"></i></span>
-                    <div class="info">
-                        <p>Het Panorama van Utrecht bestaat uit vier aaneengeplakte, zigzag gevouwen bladen met een totale lengte van 5,82 meter. Het panorama is een meterslange tekening van een rondwandeling om het centrum van Utrecht,met steeds wisselend uitzicht vanaf de singels. Het geeft een heel precies beeld van hoe de stad in 1859 er uitzag en het leuke is dat je ook het verloop van de seizoenen in de tekening terugziet.</p>
+                    <div class="waypoint" style="top: 180px; left: 120px;">
+                        <span><i class="fa-solid fa-question"></i></span>
+                        <div class="info">
+                            <p>Het Panorama van Utrecht bestaat uit vier aaneengeplakte, zigzag gevouwen bladen met een totale lengte van 5,82 meter. Het panorama is een meterslange tekening van een rondwandeling om het centrum van Utrecht,met steeds wisselend uitzicht vanaf de singels. Het geeft een heel precies beeld van hoe de stad in 1859 er uitzag en het leuke is dat je ook het verloop van de seizoenen in de tekening terugziet.</p>
+                        </div>
                     </div>
                 </div>
+
 
             </div>
             <div id="zoomen">
