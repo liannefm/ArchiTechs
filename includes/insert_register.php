@@ -1,48 +1,47 @@
 <?php
-    session_start();
-    include("connection.php");
+session_start();
+include("connection.php");
 
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
+function test_input($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
 
-        $username = $_POST['username'] ?? '';
-        $email    = $_POST['email'] ?? '';
-        $password = $_POST['password'] ?? '';
-        
-        // 1. Check of e-mail al bestaat
-        $checkSql = "SELECT 1 FROM inlog_gegevens WHERE email = :email";
-        $stmt = $conn->prepare($checkSql);
-        $stmt->execute([':email' => $email]);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-         if ($stmt->fetch()) {
-            echo "E-mail heeft al een account";
-        } else {
-            
-            $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+    $username = test_input($_POST['username']);
+    $email    = test_input($_POST['email']);
+    $password = test_input($_POST['password']);
 
-            $insertSql= "INSERT INTO inlog_gegevens(username, email, password) VALUES (:username, :email, :password)";
+    // 1. Check of e-mail al bestaat
+    $checkSql = "SELECT 1 FROM inlog_gegevens WHERE email = :email";
+    $stmt = $conn->prepare($checkSql);
+    $stmt->execute([':email' => $email]);
 
-            $insert = $conn->prepare($insertSql);
+    if ($stmt->fetch()) {
+        echo "E-mail heeft al een account";
+    } else {
 
-            $success = $insert->execute([
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+
+        $insertSql = "INSERT INTO inlog_gegevens(username, email, password) VALUES (:username, :email, :password)";
+
+        $insert = $conn->prepare($insertSql);
+
+        $success = $insert->execute([
             ':username' => $username,
             ':email'    => $email,
             ':password' => $hashed_password
-            ]);
-        
-            if ($success) {
+        ]);
+
+        if ($success) {
             echo "Account gemaakt";
-            } else {
-                $errorInfo = $insert->errorInfo();
-                echo "Error bij invoegen: " . $errorInfo[2];
-            }
+        } else {
+            $errorInfo = $insert->errorInfo();
+            echo "Error bij invoegen: " . $errorInfo[2];
         }
     }
-
-
-
-
-
-
-
-
-?>
+}
