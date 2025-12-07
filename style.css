@@ -1080,22 +1080,10 @@ img.avatar {
   position: fixed;
 }  */
 
-html,
-body {
-  overflow-y: hidden;
-  /* verticale scrollbar weg */
-  overflow-x: auto;
-  /* horizontale beweging toegestaan */
-}
-
 html::-webkit-scrollbar {
   display: none;
   /* Chrome / Edge / Safari */
 }
-
-
-
-
 
 .toolbar {
   display: flex;

@@ -25,7 +25,9 @@ include("includes/header.php");
                     <i class="fas fa-chevron-right"></i>
                 </button>
 
+
                 <div class="dropdown-container">
+
                     <a href="#"><img src="includes/image/flags/netherlands.svg"> <button onclick="setLanguage('nl')" id="talenknopnl">Nederlands</button></a>
                     <a href="#"><img src="includes/image/flags/united-kingdom.svg"> <button onclick="setLanguage('en')" id="talenknopen">Engels</button></a>
                 </div><br>
@@ -138,6 +140,13 @@ include("includes/header.php");
                         style="height: 539px; z-index: 33; margin-left: -45px; margin-top: -2px;">
                 </div>
 
+                <div class="waypoint" style="top: 180px; left: 120px;">
+                    <span><i class="fa-solid fa-question"></i></span>
+                    <div class="info">
+                        <p>Het Panorama van Utrecht bestaat uit vier aaneengeplakte, zigzag gevouwen bladen met een totale lengte van 5,82 meter. Het panorama is een meterslange tekening van een rondwandeling om het centrum van Utrecht,met steeds wisselend uitzicht vanaf de singels. Het geeft een heel precies beeld van hoe de stad in 1859 er uitzag en het leuke is dat je ook het verloop van de seizoenen in de tekening terugziet.</p>
+                    </div>
+                </div>
+
             </div>
             <div id="zoomen">
                 <button class="cirkel" onclick="zoomOut()">
@@ -147,21 +156,15 @@ include("includes/header.php");
                 <button class="cirkel" onclick="zoomIn()">
                     <img src="includes/image/vergrootglas.png" alt="inzoomen">
                 </button>
-              
-               <button class="cirkel" onclick="resetZoom()">
+
+                <button class="cirkel" onclick="resetZoom()">
                     <span id="resetknoppanorama">↺</span>
                 </button>
-
-                <div class="waypoint" style="top: 180px; left: 120px;">
-                    <span><i class="fa-solid fa-question"></i></span>
-                    <div class="info">
-                        <p>Het Panorama van Utrecht bestaat uit vier aaneengeplakte, zigzag gevouwen bladen met een totale lengte van 5,82 meter. Het panorama is een meterslange tekening van een rondwandeling om het centrum van Utrecht,met steeds wisselend uitzicht vanaf de singels. Het geeft een heel precies beeld van hoe de stad in 1859 er uitzag en het leuke is dat je ook het verloop van de seizoenen in de tekening terugziet.</p>
-                    </div>
-                </div>
             </div>
         </div>
 
     </div>
+
 
     <script>
         function sidebar_open() {
@@ -226,11 +229,31 @@ include("includes/header.php");
 
 
 
-            const wrapper = document.querySelector('.panorama-wrapper');
-            wrapper.scrollLeft = 0; // terug naar begin van de panorama
-            wrapper.scrollTop = 0; // naar boven
-            updateOverflow(); // overflow weer updaten (verticale scroll verbergen)
-        }
+        const panoramaContainer = document.querySelector('.panorama-wrapper .panorama');
+
+        panoramaContainer.addEventListener('click', function(e) {
+            const waypoint = e.target.closest('.waypoint');
+            const openedInfos = panoramaContainer.querySelectorAll('.waypoint .info.show');
+
+            console.log('1');
+            if (waypoint) {
+                console.log('2');
+                const waypointInfo = waypoint.querySelector('.info');
+                if (!waypointInfo) return;
+                console.log('3');
+                waypointInfo.classList.toggle('show');
+
+                openedInfos.forEach((info) => {
+                    if (info !== waypointInfo) info.classList.remove('show');
+                });
+            } else {
+                console.log('4');
+                openedInfos.forEach((info) => {
+                    info.classList.remove('show');
+                });
+            }
+
+        });
 
 
         const baseZoom = 1.1;
