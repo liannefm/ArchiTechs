@@ -42,6 +42,20 @@
                     <a href="#" id="middel">middel</a>
                     <a href="#" id="groot">groot</a>
                 </div>
+
+<div class="toolbar">
+  <button id="fit" class="btn" title="Pas afbeelding in het scherm">Fit</button>
+  <button id="reset" class="btn" title="Reset positie en zoom">Reset</button>
+  <span class="badge" id="zoomLabel">100%</span>
+</div>
+
+<div class="minimap-wrap">
+  <div class="minimap-head">
+    <span>Minimap</span>
+    <span class="hint">scroll = zoom</span>
+  </div>
+  <canvas id="minimap" width="440" height="300" aria-label="minimap"></canvas>
+</div>
                 
                 <p>&copy; 2025 Het Utrechts Archief</p>
             </div>
@@ -56,7 +70,7 @@
                 <h1 id="titelpagina">De geschiedenis van Utrecht</h1>
             </div>
         </div>
-        <div class="panorama-wrapper" style="margin-top: 100px;">
+        <div class="panorama-wrapper">
             <div class="panorama">
             <img src="includes/image/panorama/1.jpg" alt="Panorama Image 1"
                 style="height: 500px; z-index: 1; margin-left:  0px; margin-top: 0px;">
@@ -137,7 +151,7 @@
             </button>
 
             <button class="cirkel" onclick="resetZoom()">
-                <span style="font-size: 40px; color: white;">↺</span>
+                <span id="resetknoppanorama">↺</span>
             </button>
         </div>
 </div>      
@@ -210,16 +224,29 @@
 
 
 
-let zoomLevel = 1.1;        // start meteen 1 “klik” ingezoomd
-const minZoom = 0.6;
-const maxZoom = 2.5;
-const zoomStep = 0.1;
+const baseZoom  = 1.1;
+let zoomLevel   = baseZoom;
 
-const panorama = document.querySelector('.panorama');
-const wrapper = document.querySelector('.panorama-wrapper');
+const minZoom   = 0.6;
+const maxZoom   = 2.5;
+const zoomStep  = 0.1;
 
+const panorama  = document.querySelector('.panorama');
+const wrapper   = document.querySelector('.panorama-wrapper');
+
+const zoomLabel = document.getElementById('zoomLabel');
+
+// apply zoom
 function applyZoom() {
+    panorama.style.transformOrigin = '0 0';
     panorama.style.transform = `scale(${zoomLevel})`;
+    updateZoomLabel();
+    drawMinimap();   // <— altijd minimap updaten na zoom
+}
+
+function updateZoomLabel() {
+    if (!zoomLabel) return;
+    zoomLabel.textContent = Math.round(zoomLevel * 100) + '%';
 }
 
 function zoomIn() {
@@ -237,14 +264,16 @@ function zoomOut() {
 }
 
 function resetZoom() {
-    zoomLevel = 1;
+    zoomLevel = baseZoom;
     applyZoom();
-
-    // terug naar begin van de panorama binnen het vak
     wrapper.scrollLeft = 0;
-    wrapper.scrollTop = 0;
+    wrapper.scrollTop  = 0;
+    drawMinimap();
 }
+
+// startwaarde
 applyZoom();
+
 
 
 
@@ -288,6 +317,153 @@ window.addEventListener('DOMContentLoaded', function () {
         setFontSize('medium');
     }
 });
+
+
+
+
+
+
+ function drawMinimap() {
+    const { w: worldW, h: worldH } = getWorldSize();
+    if (!worldW || !worldH) return;
+
+    const rect = minimap.getBoundingClientRect();
+    const dpr  = window.devicePixelRatio || 1;
+
+    minimap.width  = rect.width  * dpr;
+    minimap.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const cw = rect.width;
+    const ch = rect.height;
+
+    ctx.clearRect(0, 0, cw, ch);
+
+    // schaal zodat het hele panorama in de minimap past
+    const s     = Math.min(cw / worldW, ch / worldH);
+    const drawW = worldW * s;
+    const drawH = worldH * s;
+    const offX  = (cw - drawW) / 2;
+    const offY  = (ch - drawH) / 2;
+
+    // achtergrond
+    ctx.fillStyle = '#0a0f16';
+    ctx.fillRect(0, 0, cw, ch);
+
+    // volledige panorama-rechthoek
+    ctx.fillStyle = '#1e293b';
+    ctx.fillRect(offX, offY, drawW, drawH);
+
+    // huidige viewport (wat je op het scherm ziet)
+    const viewW = wrapper.clientWidth  / zoomLevel;
+    const viewH = wrapper.clientHeight / zoomLevel;
+    const viewX = wrapper.scrollLeft;
+    const viewY = wrapper.scrollTop;
+
+    const rx = offX + viewX * s;
+    const ry = offY + viewY * s;
+    const rw = viewW * s;
+    const rh = viewH * s;
+
+    // licht vlak van viewport
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    ctx.fillRect(rx, ry, rw, rh);
+
+    // rand van viewport
+    ctx.strokeStyle = '#5aa9ff';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(rx + 1, ry + 1, rw - 2, rh - 2);
+}
+
+// helper: muispositie -> wereld-coords
+function minimapToWorld(e) {
+    const rect = minimap.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const { w: worldW, h: worldH } = getWorldSize();
+    const cw = rect.width;
+    const ch = rect.height;
+
+    const s     = Math.min(cw / worldW, ch / worldH);
+    const drawW = worldW * s;
+    const drawH = worldH * s;
+    const offX  = (cw - drawW) / 2;
+    const offY  = (ch - drawH) / 2;
+
+    const wx = (x - offX) / s;
+    const wy = (y - offY) / s;
+
+    return {
+        x: Math.max(0, Math.min(worldW, wx)),
+        y: Math.max(0, Math.min(worldH, wy))
+    };
+}
+
+// klik in minimap -> panorama verplaatsen
+minimap.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    const world = minimapToWorld(e);
+
+    const viewW = wrapper.clientWidth  / zoomLevel;
+    const viewH = wrapper.clientHeight / zoomLevel;
+
+    // center op klikpunt
+    let targetX = world.x - viewW / 2;
+    let targetY = world.y - viewH / 2;
+
+    const { w: worldW, h: worldH } = getWorldSize();
+
+    targetX = Math.max(0, Math.min(worldW - viewW, targetX));
+    targetY = Math.max(0, Math.min(worldH - viewH, targetY));
+
+    wrapper.scrollLeft = targetX;
+    wrapper.scrollTop  = targetY;
+
+    drawMinimap();
+});
+
+// scrollwiel op minimap -> zoom rond cursor
+minimap.addEventListener('wheel', (e) => {
+    e.preventDefault();
+
+    const world = minimapToWorld(e);
+    const oldZoom = zoomLevel;
+    const zoomIn  = e.deltaY < 0;
+
+    let newZoom = oldZoom * (zoomIn ? (1 + (zoomStep / oldZoom)) : (1 - (zoomStep / oldZoom)));
+    newZoom = Math.max(minZoom, Math.min(maxZoom, newZoom));
+
+    if (newZoom === oldZoom) return;
+
+    // waar zit dit wereldpunt nu op het scherm?
+    const screenX = (world.x - wrapper.scrollLeft) * oldZoom;
+    const screenY = (world.y - wrapper.scrollTop)  * oldZoom;
+
+    zoomLevel = newZoom;
+    applyZoom(); // tekent ook minimap
+
+    // nieuwe scroll zodat het punt ongeveer op dezelfde plek blijft
+    wrapper.scrollLeft = world.x - screenX / newZoom;
+    wrapper.scrollTop  = world.y - screenY / newZoom;
+
+    drawMinimap();
+}, { passive: false });
+
+// bij scrollen van het panorama ook minimap updaten
+wrapper.addEventListener('scroll', drawMinimap);
+
+// bij resize
+window.addEventListener('resize', drawMinimap);
+
+// initialiseren zodra alles geladen is
+window.addEventListener('load', () => {
+    applyZoom();
+    wrapper.scrollLeft = 0;
+    wrapper.scrollTop  = 0;
+    drawMinimap();
+});
+
 </script>
 
 </body>
