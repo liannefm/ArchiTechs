@@ -1,32 +1,53 @@
+<?php
+session_start();
+include("includes/connection.php");
+include("includes/user_ingelogd.php");
+include("includes/header.php");
+
+if (isset($_SESSION['user'])) {
+    header("location: crud_home.php");
+}
+
+?>
+
 <body>
 
-<h2>Login Form</h2>
+    <h2>Login Form</h2>
 
-<div id="achtergrondInlog">
-    <form action="/action_page.php" method="post">
-    <div class="imgcontainer">
-        <img src="img_avatar2.png" alt="Avatar" class="avatar">
+    <div id="achtergrondInlog_register">
+        <form action="includes/check_inlog.php" method="post">
+            <div class="avatar_container">
+                <img src="includes/image/hualogo.png" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+                <?php if (isset($_SESSION['error'])) { ?>
+                    <div class="error">
+                        <?php
+                        echo htmlspecialchars($_SESSION['error']);
+                        unset($_SESSION['error']);
+                        ?>
+                    </div>
+                <?php } ?>
+                <label for="email"><b>E-mail</b></label>
+                <input type="email" placeholder="Enter E-mail" name="email" required>
+
+                <label for="password"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required>
+
+                <button type="submit" id="loginbtn">Login</button>
+                <label>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                </label>
+
+            </div>
+
+            <div id="cancelbtnBox">
+                <button type="button" class="cancelbtn">Cancel</button>
+            </div>
+        </form>
     </div>
-
-    <div class="container">
-        <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="uname" required>
-
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
-            
-        <button type="submit">Login</button>
-        <label>
-        <input type="checkbox" checked="checked" name="remember"> Remember me
-        </label>
-    </div>
-
-    <div class="container" style="background-color:#f1f1f1">
-        <button type="button" class="cancelbtn">Cancel</button>
-        <span class="psw">Forgot <a href="#">password?</a></span>
-    </div>
-    </form>
-</div>
 
 </body>
+
 </html>
