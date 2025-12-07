@@ -147,8 +147,8 @@ include("includes/header.php");
                 <button class="cirkel" onclick="zoomIn()">
                     <img src="includes/image/vergrootglas.png" alt="inzoomen">
                 </button>
-              
-               <button class="cirkel" onclick="resetZoom()">
+
+                <button class="cirkel" onclick="resetZoom()">
                     <span id="resetknoppanorama">↺</span>
                 </button>
 
@@ -226,11 +226,11 @@ include("includes/header.php");
 
 
 
-            const wrapper = document.querySelector('.panorama-wrapper');
-            wrapper.scrollLeft = 0; // terug naar begin van de panorama
-            wrapper.scrollTop = 0; // naar boven
-            updateOverflow(); // overflow weer updaten (verticale scroll verbergen)
-        }
+        const wrapper = document.querySelector('.panorama-wrapper');
+        wrapper.scrollLeft = 0; // terug naar begin van de panorama
+        wrapper.scrollTop = 0; // naar boven
+        updateOverflow(); // overflow weer updaten (verticale scroll verbergen)
+
 
 
         const baseZoom = 1.1;
