@@ -327,11 +327,6 @@ include("includes/header.php");
             }
         });
 
-
-
-
-
-
         function drawMinimap() {
             const {
                 w: worldW,
