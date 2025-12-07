@@ -25,9 +25,7 @@ include("includes/header.php");
                     <i class="fas fa-chevron-right"></i>
                 </button>
 
-
                 <div class="dropdown-container">
-
                     <a href="#"><img src="includes/image/flags/netherlands.svg"> <button onclick="setLanguage('nl')" id="talenknopnl">Nederlands</button></a>
                     <a href="#"><img src="includes/image/flags/united-kingdom.svg"> <button onclick="setLanguage('en')" id="talenknopen">Engels</button></a>
                 </div><br>

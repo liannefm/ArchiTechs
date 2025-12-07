@@ -43,7 +43,7 @@ if (isset($_GET['id'])) {
     <div id="achtergrondEditPanorama">
         <h2>Inhoud panorama Nl</h2>
 
-        <form action="includes/update_panorama.php" method="POST">
+        <form action="includes/update_panorama.php" method="POST" enctype="multipart/form-data">
 
             <div class="EditPanoramaBox">
 
@@ -53,11 +53,24 @@ if (isset($_GET['id'])) {
 
                     <?php echo "<p>Id: $id</p>" ?><br>
 
-                    <div class="formulier-box">
-                        <p>Pagina foto:</p>
-                        <input type="tekst" id="pagina_foto" name="pagina_foto" value="<?= htmlspecialchars($pagina_foto) ?>">
-                    </div>
+                    <p>Pagina foto:</p>
 
+                    <div id="FotoUploadBox">
+                        <!-- laat de oude foto zien als die er is -->
+                        <?php if (!empty($pagina_foto)): ?>
+                            <p>Huidige foto:</p><br>
+                            <img src="<?= htmlspecialchars($pagina_foto) ?>" alt="Huidige foto" style="max-width:200px;">
+                        <?php endif; ?>
+
+                        <input type="hidden" name="oude_pagina_foto" value="<?= htmlspecialchars($pagina_foto) ?>"><br>
+
+                        <input type="file" id="pagina_foto" name="pagina_foto" accept="image/*">
+
+                        <div class="formulier-box">
+                            <p>Naam voor nieuwe foto:</p>
+                            <input type="text" name="bestandsnaam" id="bestandsnaam" placeholder="panorama_001">
+                        </div>
+                    </div>
 
                     <div class="formulier-box">
                         <p>Pagina nummer:</p>
