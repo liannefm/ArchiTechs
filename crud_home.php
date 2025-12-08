@@ -46,7 +46,7 @@ if (!isset($_SESSION['user'])) {
                                         Bewerken
                                     </div>
                                 </a>
-                                <a href='manager_detail.php?id={$v['id']}'>
+                                <a href='detail_panorama.php?id={$v['id']}'>
                                     <div class='CrudKnoppen'>
                                         detail
                                     </div>
