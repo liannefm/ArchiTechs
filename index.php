@@ -77,22 +77,22 @@ try {
                     <a href="#"><img src="includes/image/flags/united-kingdom.svg"> <button onclick="setLanguage('en')" id="talenknopen">Engels</button></a>
                 </div><br>
 
-                <button class="dropdown-btn">
+                <!-- <button class="dropdown-btn">
                     <span id="tekstgrootte">tekstgrootte</span>
                     <i class="fas fa-chevron-right"></i>
-                </button>
+                </button> -->
 
-                <div class="dropdown-container">
+                <!-- <div class="dropdown-container">
                     <a href="#" id="klein">klein</a>
                     <a href="#" id="middel">middel</a>
                     <a href="#" id="groot">groot</a>
-                </div>
+                </div> -->
 
-                <div class="toolbar">
+                <!-- <div class="toolbar">
                     <button id="fit" class="btn" title="Pas afbeelding in het scherm">Fit</button>
                     <button id="reset" class="btn" title="Reset positie en zoom">Reset</button>
                     <span class="badge" id="zoomLabel">100%</span>
-                </div>
+                </div> -->
 
                 <div class="minimap-wrap">
                     <div class="minimap-head">
@@ -207,46 +207,47 @@ try {
     </div>
 
 
-    <script>
-        function sidebar_open() {
-            document.getElementById("mySidebar").style.display = "block";
-        }
+<script>
+    function sidebar_open() {
+        document.getElementById("mySidebar").style.display = "block";
+    }
 
-        function sidebar_close() {
-            document.getElementById("mySidebar").style.display = "none";
-        }
+    function sidebar_close() {
+        document.getElementById("mySidebar").style.display = "none";
+    }
 
-        var dropdown = document.getElementsByClassName("dropdown-btn");
-        var i;
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
 
-        for (i = 0; i < dropdown.length; i++) {
-            dropdown[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var dropdownContent = this.nextElementSibling;
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
 
-                if (dropdownContent.style.display === "block") {
-                    dropdownContent.style.display = "none";
-                } else {
-                    dropdownContent.style.display = "block";
-                }
-            });
-        }
-
-        function toggleDarkMode() {
-            var element = document.body;
-            const lightModeTextElement = document.querySelector('#lichtmodus');
-            const darkModeTextElement = document.querySelector('#donkeremodus');
-
-            element.classList.toggle("dark-mode");
-            if (element.classList.contains('dark-mode')) {
-                lightModeTextElement.classList.remove('show');
-                darkModeTextElement.classList.add('show');
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
             } else {
-                lightModeTextElement.classList.add('show');
-                darkModeTextElement.classList.remove('show');
+                dropdownContent.style.display = "block";
             }
-        }
+        });
+    }
 
+    function toggleDarkMode() {
+        var element = document.body;
+        const lightModeTextElement = document.querySelector('#lichtmodus');
+        const darkModeTextElement = document.querySelector('#donkeremodus');
+
+        element.classList.toggle("dark-mode");
+        if (element.classList.contains('dark-mode')) {
+            lightModeTextElement.classList.remove('show');
+            darkModeTextElement.classList.add('show');
+        } else {
+            lightModeTextElement.classList.add('show');
+            darkModeTextElement.classList.remove('show');
+        }
+    }
+
+    let translations;
         const hotspotToggle = document.getElementById("hotspotToggle");
 
         //hotspots tonen/verbergen
@@ -265,305 +266,300 @@ try {
         hotspotToggle.addEventListener("change", updateHotspots);
 
 
-        let translations;
+    fetch("translations.json")
+        .then(res => res.json())
+        .then(data => {
+            translations = data;
 
-        fetch("translations.json")
-            .then(res => res.json())
-            .then(data => {
-                translations = data;
-
-                const userLang = navigator.language.startsWith("nl") ? "nl" : "en";
-                setLanguage(userLang);
-            });
-
-        function setLanguage(lang) {
-            Object.entries(translations[lang]).forEach(([key, value]) => {
-                const selectedElement = document.getElementById(key);
-                if (selectedElement) {
-                    selectedElement.innerText = value;
-                }
-            });
-        }
-
-
-
-        const panoramaContainer = document.querySelector('.panorama-wrapper .panorama');
-
-        panoramaContainer.addEventListener('click', function(e) {
-            const waypoint = e.target.closest('.waypoint');
-            const openedInfos = panoramaContainer.querySelectorAll('.waypoint .info.show');
-
-            console.log('1');
-            if (waypoint) {
-                console.log('2');
-                const waypointInfo = waypoint.querySelector('.info');
-                if (!waypointInfo) return;
-                console.log('3');
-                waypointInfo.classList.toggle('show');
-
-                openedInfos.forEach((info) => {
-                    if (info !== waypointInfo) info.classList.remove('show');
-                });
-            } else {
-                console.log('4');
-                openedInfos.forEach((info) => {
-                    info.classList.remove('show');
-                });
-            }
-
+            const userLang = navigator.language.startsWith("nl") ? "nl" : "en";
+            setLanguage(userLang);
         });
 
-
-        const baseZoom = 1.1;
-        let zoomLevel = baseZoom;
-
-        const minZoom = 0.6;
-        const maxZoom = 2.5;
-        const zoomStep = 0.1;
-
-        const panorama = document.querySelector('.panorama');
-        const wrapper = document.querySelector('.panorama-wrapper');
-
-        const zoomLabel = document.getElementById('zoomLabel');
-
-        // apply zoom
-        function applyZoom() {
-            panorama.style.transformOrigin = '0 0';
-            panorama.style.transform = `scale(${zoomLevel})`;
-            updateZoomLabel();
-            drawMinimap(); // <— altijd minimap updaten na zoom
-        }
-
-        function updateZoomLabel() {
-            if (!zoomLabel) return;
-            zoomLabel.textContent = Math.round(zoomLevel * 100) + '%';
-        }
-
-        function zoomIn() {
-            if (zoomLevel < maxZoom) {
-                zoomLevel += zoomStep;
-                applyZoom();
+    function setLanguage(lang) {
+        Object.entries(translations[lang]).forEach(([key, value]) => {
+            const selectedElement = document.getElementById(key);
+            if (selectedElement) {
+                selectedElement.innerText = value;
             }
-        }
+        });
+    }
 
-        function zoomOut() {
-            if (zoomLevel > minZoom) {
-                zoomLevel -= zoomStep;
-                applyZoom();
-            }
-        }
+    const panoramaContainer = document.querySelector('.panorama-wrapper .panorama');
 
-        function resetZoom() {
-            zoomLevel = baseZoom;
+    panoramaContainer.addEventListener('click', function (e) {
+        const waypoint = e.target.closest('.waypoint');
+        const openedInfos = panoramaContainer.querySelectorAll('.waypoint .info.show');
+
+        if (waypoint) {
+            const waypointInfo = waypoint.querySelector('.info');
+            if (!waypointInfo) return;
+            waypointInfo.classList.toggle('show');
+
+            openedInfos.forEach((info) => {
+                if (info !== waypointInfo) info.classList.remove('show');
+            });
+        } else {
+            openedInfos.forEach((info) => {
+                info.classList.remove('show');
+            });
+        }
+    });
+
+    // ===== ZOOM / PANORAMA =====
+    const baseZoom = 1.1;
+    let zoomLevel = baseZoom;
+
+    const minZoom = 0.6;
+    const maxZoom = 2.5;
+    const zoomStep = 0.1;
+
+    const panorama = document.querySelector('.panorama');
+    const wrapper = document.querySelector('.panorama-wrapper');
+    const zoomLabel = document.getElementById('zoomLabel');
+
+    // ===== MINIMAP SETUP =====
+    const minimap = document.getElementById('minimap');
+    const ctx = minimap.getContext('2d');
+
+    // totale "wereld" = de complete panorama-breedte/hoogte
+    function getWorldSize() {
+        return {
+            w: panorama.scrollWidth,
+            h: panorama.scrollHeight
+        };
+    }
+
+    // Gebruik de eerste panorama-afbeelding als bron voor de minimap
+const panoSourceImg = document.querySelector('.panorama img');
+
+
+    function drawMinimap() {
+        const { w: worldW, h: worldH } = getWorldSize();
+        if (!worldW || !worldH) return;
+
+        const rect = minimap.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+
+        minimap.width = rect.width * dpr;
+        minimap.height = rect.height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        const cw = rect.width;
+        const ch = rect.height;
+
+        ctx.clearRect(0, 0, cw, ch);
+
+        // schaal zodat het hele panorama in de minimap past
+        const s = Math.min(cw / worldW, ch / worldH);
+        const drawW = worldW * s;
+        const drawH = worldH * s;
+        const offX = (cw - drawW) / 2;
+        const offY = (ch - drawH) / 2;
+
+        // achtergrond
+        ctx.fillStyle = '#0a0f16';
+        ctx.fillRect(0, 0, cw, ch);
+
+// "wereld" = afbeelding gebaseerd op eerste panorama-foto
+if (panoSourceImg && panoSourceImg.complete) {
+    ctx.drawImage(panoSourceImg, offX, offY, drawW, drawH);
+} else {
+    // fallback: gekleurde balk als img nog niet geladen is
+    ctx.fillStyle = '#1e293b';
+    ctx.fillRect(offX, offY, drawW, drawH);
+}
+
+        // actuele viewport (wat je nu op scherm ziet)
+        const viewW = wrapper.clientWidth / zoomLevel;
+        const viewH = wrapper.clientHeight / zoomLevel;
+        const viewX = wrapper.scrollLeft;
+        const viewY = wrapper.scrollTop;
+
+        const rx = offX + viewX * s;
+        const ry = offY + viewY * s;
+        const rw = viewW * s;
+        const rh = viewH * s;
+
+        // licht vlak van viewport
+        ctx.fillStyle = 'rgba(255,255,255,0.15)';
+        ctx.fillRect(rx, ry, rw, rh);
+
+        // rand van viewport
+        ctx.strokeStyle = '#5aa9ff';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(rx + 1, ry + 1, rw - 2, rh - 2);
+    }
+
+    // apply zoom
+    function applyZoom() {
+        panorama.style.transformOrigin = '0 0';
+        panorama.style.transform = `scale(${zoomLevel})`;
+        updateZoomLabel();
+        drawMinimap();
+    }
+
+    function updateZoomLabel() {
+        if (!zoomLabel) return;
+        zoomLabel.textContent = Math.round(zoomLevel * 100) + '%';
+    }
+
+    function zoomIn() {
+        if (zoomLevel < maxZoom) {
+            zoomLevel += zoomStep;
             applyZoom();
-            wrapper.scrollLeft = 0;
-            wrapper.scrollTop = 0;
-            drawMinimap();
         }
+    }
 
-        // startwaarde
+    function zoomOut() {
+        if (zoomLevel > minZoom) {
+            zoomLevel -= zoomStep;
+            applyZoom();
+        }
+    }
+
+    function resetZoom() {
+        zoomLevel = baseZoom;
+        applyZoom();
+        wrapper.scrollLeft = 0;
+        wrapper.scrollTop = 0;
+        drawMinimap();
+    }
+
+    // ===== LETTERGROOTTES =====
+    // function setFontSize(size) {
+    //     const body = document.body;
+
+    //     body.classList.remove('font-small', 'font-medium', 'font-large');
+
+    //     if (size === 'small') {
+    //         body.classList.add('font-small');
+    //     } else if (size === 'medium') {
+    //         body.classList.add('font-medium');
+    //     } else if (size === 'large') {
+    //         body.classList.add('font-large');
+    //     }
+
+    //     localStorage.setItem('fontSize', size);
+    // }
+
+    // document.getElementById('klein').addEventListener('click', function (e) {
+    //     e.preventDefault();
+    //     setFontSize('small');
+    // });
+
+    // document.getElementById('middel').addEventListener('click', function (e) {
+    //     e.preventDefault();
+    //     setFontSize('medium');
+    // });
+
+    // document.getElementById('groot').addEventListener('click', function (e) {
+    //     e.preventDefault();
+    //     setFontSize('large');
+    // });
+
+    // window.addEventListener('DOMContentLoaded', function () {
+    //     const savedSize = localStorage.getItem('fontSize');
+    //     if (savedSize) {
+    //         setFontSize(savedSize);
+    //     } else {
+    //         setFontSize('medium');
+    //     }
+    // });
+
+    // ===== MINIMAP INTERACTIE =====
+    function minimapToWorld(e) {
+        const rect = minimap.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const { w: worldW, h: worldH } = getWorldSize();
+        const cw = rect.width;
+        const ch = rect.height;
+
+        const s = Math.min(cw / worldW, ch / worldH);
+        const drawW = worldW * s;
+        const drawH = worldH * s;
+        const offX = (cw - drawW) / 2;
+        const offY = (ch - drawH) / 2;
+
+        const wx = (x - offX) / s;
+        const wy = (y - offY) / s;
+
+        return {
+            x: Math.max(0, Math.min(worldW, wx)),
+            y: Math.max(0, Math.min(worldH, wy))
+        };
+    }
+
+    minimap.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        const world = minimapToWorld(e);
+
+        const viewW = wrapper.clientWidth / zoomLevel;
+        const viewH = wrapper.clientHeight / zoomLevel;
+
+        let targetX = world.x - viewW / 2;
+        let targetY = world.y - viewH / 2;
+
+        const { w: worldW, h: worldH } = getWorldSize();
+
+        targetX = Math.max(0, Math.min(worldW - viewW, targetX));
+        targetY = Math.max(0, Math.min(worldH - viewH, targetY));
+
+        wrapper.scrollLeft = targetX;
+        wrapper.scrollTop = targetY;
+
+        drawMinimap();
+    });
+
+    minimap.addEventListener('wheel', (e) => {
+        e.preventDefault();
+
+        const world = minimapToWorld(e);
+        const oldZoom = zoomLevel;
+        const zoomInDirection = e.deltaY < 0;
+
+        let newZoom = oldZoom * (zoomInDirection ? (1 + (zoomStep / oldZoom)) : (1 - (zoomStep / oldZoom)));
+        newZoom = Math.max(minZoom, Math.min(maxZoom, newZoom));
+
+        if (newZoom === oldZoom) return;
+
+        const screenX = (world.x - wrapper.scrollLeft) * oldZoom;
+        const screenY = (world.y - wrapper.scrollTop) * oldZoom;
+
+        zoomLevel = newZoom;
         applyZoom();
 
+        wrapper.scrollLeft = world.x - screenX / newZoom;
+        wrapper.scrollTop = world.y - screenY / newZoom;
+
+        drawMinimap();
+    }, {
+        passive: false
+    });
+
+    wrapper.addEventListener('scroll', drawMinimap);
+    window.addEventListener('resize', drawMinimap);
+
+    // alles initialiseren zodra de pagina klaar is
+    window.addEventListener('load', () => {
+        zoomLevel = baseZoom;
+        applyZoom();
+        wrapper.scrollLeft = 0;
+        wrapper.scrollTop = 0;
+        drawMinimap();
+    });
+
+    if (panoSourceImg && !panoSourceImg.complete) {
+    panoSourceImg.addEventListener('load', drawMinimap);
+}
 
 
+    // maak zoom-functies global zodat de HTML-knoppen ze kunnen gebruiken
+    window.zoomIn = zoomIn;
+    window.zoomOut = zoomOut;
+    window.resetZoom = resetZoom;
+</script>
 
-        // lettergroottes
-        function setFontSize(size) {
-            const body = document.body;
-
-            body.classList.remove('font-small', 'font-medium', 'font-large');
-
-            if (size === 'small') {
-                body.classList.add('font-small');
-            } else if (size === 'medium') {
-                body.classList.add('font-medium');
-            } else if (size === 'large') {
-                body.classList.add('font-large');
-            }
-
-            localStorage.setItem('fontSize', size);
-        }
-
-        document.getElementById('klein').addEventListener('click', function(e) {
-            e.preventDefault();
-            setFontSize('small');
-        });
-
-        document.getElementById('middel').addEventListener('click', function(e) {
-            e.preventDefault();
-            setFontSize('medium');
-        });
-
-        document.getElementById('groot').addEventListener('click', function(e) {
-            e.preventDefault();
-            setFontSize('large');
-        });
-
-        window.addEventListener('DOMContentLoaded', function() {
-            const savedSize = localStorage.getItem('fontSize');
-            if (savedSize) {
-                setFontSize(savedSize);
-            } else {
-                setFontSize('medium');
-            }
-        });
-
-
-
-
-
-
-        function drawMinimap() {
-            const {
-                w: worldW,
-                h: worldH
-            } = getWorldSize();
-            if (!worldW || !worldH) return;
-
-            const rect = minimap.getBoundingClientRect();
-            const dpr = window.devicePixelRatio || 1;
-
-            minimap.width = rect.width * dpr;
-            minimap.height = rect.height * dpr;
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-            const cw = rect.width;
-            const ch = rect.height;
-
-            ctx.clearRect(0, 0, cw, ch);
-
-            // schaal zodat het hele panorama in de minimap past
-            const s = Math.min(cw / worldW, ch / worldH);
-            const drawW = worldW * s;
-            const drawH = worldH * s;
-            const offX = (cw - drawW) / 2;
-            const offY = (ch - drawH) / 2;
-
-            // achtergrond
-            ctx.fillStyle = '#0a0f16';
-            ctx.fillRect(0, 0, cw, ch);
-
-            // volledige panorama-rechthoek
-            ctx.fillStyle = '#1e293b';
-            ctx.fillRect(offX, offY, drawW, drawH);
-
-            // huidige viewport (wat je op het scherm ziet)
-            const viewW = wrapper.clientWidth / zoomLevel;
-            const viewH = wrapper.clientHeight / zoomLevel;
-            const viewX = wrapper.scrollLeft;
-            const viewY = wrapper.scrollTop;
-
-            const rx = offX + viewX * s;
-            const ry = offY + viewY * s;
-            const rw = viewW * s;
-            const rh = viewH * s;
-
-            // licht vlak van viewport
-            ctx.fillStyle = 'rgba(255,255,255,0.15)';
-            ctx.fillRect(rx, ry, rw, rh);
-
-            // rand van viewport
-            ctx.strokeStyle = '#5aa9ff';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(rx + 1, ry + 1, rw - 2, rh - 2);
-        }
-
-        // helper: muispositie -> wereld-coords
-        function minimapToWorld(e) {
-            const rect = minimap.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const {
-                w: worldW,
-                h: worldH
-            } = getWorldSize();
-            const cw = rect.width;
-            const ch = rect.height;
-
-            const s = Math.min(cw / worldW, ch / worldH);
-            const drawW = worldW * s;
-            const drawH = worldH * s;
-            const offX = (cw - drawW) / 2;
-            const offY = (ch - drawH) / 2;
-
-            const wx = (x - offX) / s;
-            const wy = (y - offY) / s;
-
-            return {
-                x: Math.max(0, Math.min(worldW, wx)),
-                y: Math.max(0, Math.min(worldH, wy))
-            };
-        }
-
-        // klik in minimap -> panorama verplaatsen
-        minimap.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            const world = minimapToWorld(e);
-
-            const viewW = wrapper.clientWidth / zoomLevel;
-            const viewH = wrapper.clientHeight / zoomLevel;
-
-            // center op klikpunt
-            let targetX = world.x - viewW / 2;
-            let targetY = world.y - viewH / 2;
-
-            const {
-                w: worldW,
-                h: worldH
-            } = getWorldSize();
-
-            targetX = Math.max(0, Math.min(worldW - viewW, targetX));
-            targetY = Math.max(0, Math.min(worldH - viewH, targetY));
-
-            wrapper.scrollLeft = targetX;
-            wrapper.scrollTop = targetY;
-
-            drawMinimap();
-        });
-
-        // scrollwiel op minimap -> zoom rond cursor
-        minimap.addEventListener('wheel', (e) => {
-            e.preventDefault();
-
-            const world = minimapToWorld(e);
-            const oldZoom = zoomLevel;
-            const zoomIn = e.deltaY < 0;
-
-            let newZoom = oldZoom * (zoomIn ? (1 + (zoomStep / oldZoom)) : (1 - (zoomStep / oldZoom)));
-            newZoom = Math.max(minZoom, Math.min(maxZoom, newZoom));
-
-            if (newZoom === oldZoom) return;
-
-            // waar zit dit wereldpunt nu op het scherm?
-            const screenX = (world.x - wrapper.scrollLeft) * oldZoom;
-            const screenY = (world.y - wrapper.scrollTop) * oldZoom;
-
-            zoomLevel = newZoom;
-            applyZoom(); // tekent ook minimap
-
-            // nieuwe scroll zodat het punt ongeveer op dezelfde plek blijft
-            wrapper.scrollLeft = world.x - screenX / newZoom;
-            wrapper.scrollTop = world.y - screenY / newZoom;
-
-            drawMinimap();
-        }, {
-            passive: false
-        });
-
-        // bij scrollen van het panorama ook minimap updaten
-        wrapper.addEventListener('scroll', drawMinimap);
-
-        // bij resize
-        window.addEventListener('resize', drawMinimap);
-
-        // initialiseren zodra alles geladen is
-        window.addEventListener('load', () => {
-            applyZoom();
-            wrapper.scrollLeft = 0;
-            wrapper.scrollTop = 0;
-            drawMinimap();
-        });
-    </script>
 
 </body>
