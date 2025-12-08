@@ -806,6 +806,9 @@ img.avatar {
   left: 0;
 
   transform-origin: 0 0;
+
+  height: auto;
+  overflow-y: scroll;
 }
 
 .panorama img {
@@ -853,7 +856,7 @@ img.avatar {
 #zoomen {
   display: flex;
   position: fixed;
-  bottom: 15px;
+  bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -1145,26 +1148,24 @@ html::-webkit-scrollbar {
 
 /* Minimap */
 .minimap-wrap {
-  position: absolute;
-  right: 14px;
-  bottom: 14px;
-  background: rgba(18, 24, 33, 0.9);
-  border: 1px solid var(--muted);
+  /* position: absolute;
+  left: 95px;
+  bottom: 55px; */
+  background-color: #16413b;
   border-radius: 12px;
   padding: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
-  backdrop-filter: blur(6px);
   display: flex;
   flex-direction: column;
   gap: 6px;
+  margin-left: 90px;
+  margin-top: 50px;
 }
 
 .minimap-head {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  font-size: 12px;
   opacity: .85;
+  color: white;
 }
 
 #minimap {
@@ -1174,7 +1175,7 @@ html::-webkit-scrollbar {
   height: 150px;
   /* CSS pixels */
   border-radius: 8px;
-  background: #0a0f16;
+  /* background: #0a0f16; */
   outline: 1px solid rgba(255, 255, 255, 0.08);
   cursor: crosshair;
   user-select: none;
@@ -1196,11 +1197,11 @@ html::-webkit-scrollbar {
 
 
 
-.panorama {
+/* .panorama {
   display: flex;
   flex-direction: row;
   height: auto;
   overflow-y: scroll;
-}
+} */
 
 /* einde styling laparello */
