@@ -1,5 +1,50 @@
 <?php
 include("includes/header.php");
+include("includes/connection.php");
+
+try {
+    // 1) Alle panorama-pagina's
+    $stmt = $conn->prepare("
+        SELECT 
+            id,
+            pagina_foto,
+            pagina_nummer,
+            titel,
+            img_height,
+            img_margin_left,
+            img_margin_top,
+            img_z_index
+        FROM panorama
+        ORDER BY pagina_nummer ASC
+    ");
+    $stmt->execute();
+    $panoramaRijen = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // 2) Alle extra info / waypoints per pagina
+    $stmt2 = $conn->prepare("
+    SELECT 
+        pagina_nummer,
+        aanvullende_info,
+        waypoint_top,
+        waypoint_left,
+        foto
+    FROM extra_info
+    ");
+    $stmt2->execute();
+    $waypointsRaw = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+    // 3) Groeperen per pagina_nummer -> meerdere waypoints per pagina
+    $waypointsPerPagina = [];
+    foreach ($waypointsRaw as $wp) {
+        $page = (int)$wp['pagina_nummer'];
+        if (!isset($waypointsPerPagina[$page])) {
+            $waypointsPerPagina[$page] = [];
+        }
+        $waypointsPerPagina[$page][] = $wp;
+    }
+} catch (PDOException $e) {
+    die('Database-fout: ' . $e->getMessage());
+}
 ?>
 
 <body>
@@ -18,7 +63,7 @@ include("includes/header.php");
 
                 <div id="lightmode"><span id="lichtmodus" class="show">lichtmodus</span><span id="donkeremodus">donkere modus</span><label class="switch"><input onChange="toggleDarkMode()" type="checkbox"><span class="slider round"></span></label></div><br>
 
-                <div id="hotspot">hotspot<label class="switch"><input type="checkbox"><span class="slider round"></span></label></div>
+                <div id="hotspot">hotspot<label class="switch"><input id="hotspotToggle" type="checkbox" checked><span class="slider round"></span></label></div>
 
                 <button class="dropdown-btn">
                     <span id="talen">talen</span>
@@ -72,96 +117,92 @@ include("includes/header.php");
             </div>
             <div class="panorama-wrapper">
                 <div class="panorama">
-                    <img src="includes/image/panorama/1.jpg" alt="Panorama Image 1"
-                        style="height: 500px; z-index: 1; margin-left:  0px; margin-top: 0px;">
-                    <img src="includes/image/panorama/2.jpg" alt="Panorama Image 2"
-                        style="height: 500px; z-index: 2; margin-left: 0px; margin-top: 0px;">
-                    <img src="includes/image/panorama/3.jpg" alt="Panorama Image 3"
-                        style="height: 497.5px; z-index: 3; margin-left: -40px; margin-top: -1px;">
-                    <img src="includes/image/panorama/4.jpg" alt="Panorama Image 4"
-                        style="height: 500px; z-index: 4; margin-left: -43px; margin-top: -5px;">
-                    <img src="includes/image/panorama/5.jpg" alt="Panorama Image 5"
-                        style="height: 506px; z-index: 5; margin-left: -56px; margin-top: -8px;">
-                    <img src="includes/image/panorama/6.jpg" alt="Panorama Image 6"
-                        style="height: 511px; z-index: 6; margin-left: -60px; margin-top: -12px;">
-                    <img src="includes/image/panorama/7.jpg" alt="Panorama Image 7"
-                        style="height: 523px; z-index: 8; margin-left: -71px; margin-top: -13px;">
-                    <img src="includes/image/panorama/8.jpg" alt="Panorama Image 8"
-                        style="height: 502px; z-index: 7; margin-left: -44px; margin-top: -6px;">
-                    <img src="includes/image/panorama/9.jpg" alt="Panorama Image 9"
-                        style="height: 514px; z-index: 9; margin-left: -37px; margin-top: -12px;">
-                    <img src="includes/image/panorama/10.jpg" alt="Panorama Image 10"
-                        style="height: 511px; z-index: 10; margin-left: -44px; margin-top: -11px;">
-                    <img src="includes/image/panorama/11.jpg" alt="Panorama Image 11"
-                        style="height: 515px; z-index: 11; margin-left: -62px; margin-top: -13px;">
-                    <img src="includes/image/panorama/12.jpg" alt="Panorama Image 12"
-                        style="height: 518px; z-index: 12; margin-left: -60px; margin-top: -11px;">
-                    <img src="includes/image/panorama/13.jpg" alt="Panorama Image 13"
-                        style="height: 515.5px; z-index: 13; margin-left: -37px; margin-top: -11px;">
-                    <img src="includes/image/panorama/14.jpg" alt="Panorama Image 14"
-                        style="height: 509px; z-index: 14; margin-left: -45px; margin-top: -6px;">
-                    <img src="includes/image/panorama/15.jpg" alt="Panorama Image 15"
-                        style="height: 506px; z-index: 15; margin-left: -59px; margin-top: -4px;">
-                    <img src="includes/image/panorama/16.jpg" alt="Panorama Image 16"
-                        style="height: 505px; z-index: 16; margin-left: -54px; margin-top: 1px;">
-                    <img src="includes/image/panorama/17.jpg" alt="Panorama Image 17"
-                        style="height: 508px; z-index: 17; margin-left: -36px; margin-top: 1px;">
-                    <img src="includes/image/panorama/18.jpg" alt="Panorama Image 18"
-                        style="height: 515px; z-index: 18; margin-left: -40px; margin-top: 1.5px;">
-                    <img src="includes/image/panorama/19.jpg" alt="Panorama Image 19"
-                        style="height: 526px; z-index: 19; margin-left: -41px; margin-top: -3px;">
-                    <img src="includes/image/panorama/20.jpg" alt="Panorama Image 20"
-                        style="height: 534px; z-index: 21; margin-left: -38px; margin-top: -6px;">
-                    <img src="includes/image/panorama/21.jpg" alt="Panorama Image 21"
-                        style="height: 526px; z-index: 20; margin-left: -30px; margin-top: 7px;">
-                    <img src="includes/image/panorama/22.jpg" alt="Panorama Image 22"
-                        style="height: 542px; z-index: 22; margin-left: -43px; margin-top: -5px;">
-                    <img src="includes/image/panorama/23.jpg" alt="Panorama Image 23"
-                        style="height: 528px; z-index: 23; margin-left: -40px; margin-top: 2px;">
-                    <img src="includes/image/panorama/24.jpg" alt="Panorama Image 24"
-                        style="height: 506px; z-index: 24; margin-left: -34px; margin-top: 16px;">
-                    <img src="includes/image/panorama/25.jpg" alt="Panorama Image 25"
-                        style="height: 524px; z-index: 25; margin-left: -30px; margin-top: 1px;">
-                    <img src="includes/image/panorama/26.jpg" alt="Panorama Image 26"
-                        style="height: 510.5px; z-index: 26; margin-left: -35px; margin-top: 12px;">
-                    <img src="includes/image/panorama/27.jpg" alt="Panorama Image 27"
-                        style="height: 527px; z-index: 27; margin-left: -42px; margin-top: 5px;">
-                    <img src="includes/image/panorama/28.jpg" alt="Panorama Image 28"
-                        style="height: 540px; z-index: 28; margin-left: -48px; margin-top: -4px;">
-                    <img src="includes/image/panorama/29.jpg" alt="Panorama Image 29"
-                        style="height: 534px; z-index: 29; margin-left: -44px; margin-top: -1px;">
-                    <img src="includes/image/panorama/30.jpg" alt="Panorama Image 30"
-                        style="height: 531px; z-index: 30; margin-left: -53px; margin-top: 5px;">
-                    <img src="includes/image/panorama/31.jpg" alt="Panorama Image 31"
-                        style="height: 540px; z-index: 32; margin-left: -47px; margin-top: 1px;">
-                    <img src="includes/image/panorama/32.jpg" alt="Panorama Image 32"
-                        style="height: 535px; z-index: 31; margin-left: -48px; margin-top: -4px;">
-                    <img src="includes/image/panorama/33.jpg" alt="Panorama Image 33"
-                        style="height: 539px; z-index: 33; margin-left: -45px; margin-top: -2px;">
+                    <?php foreach ($panoramaRijen as $row): ?>
+                        <?php
+                        $paginaNummer = (int)$row['pagina_nummer'];
+
+                        // Afbeeldingspad netjes maken
+                        $src = str_replace('\\', '/', $row['pagina_foto']);
+
+                        // Posities uit de DB
+                        $height     = $row['img_height']      ?? 500;
+                        $marginLeft = $row['img_margin_left'] ?? 0;
+                        $marginTop  = $row['img_margin_top']  ?? 0;
+                        $zIndex     = $row['img_z_index']     ?? $paginaNummer;
+
+                        // Alle waypoints die bij deze pagina horen (via pagina_nummer)
+                        $waypoints = $waypointsPerPagina[$paginaNummer] ?? [];
+                        ?>
+
+                        <!-- Wrapper voor één pagina: hieraan hangen de waypoints -->
+                        <div class="panorama-page"
+                            style="
+                    margin-left: <?= (int)$marginLeft; ?>px;
+                    margin-top:  <?= (int)$marginTop; ?>px;
+                    z-index:     <?= (int)$zIndex; ?>;
+                 ">
+
+                            <!-- De panorama-afbeelding zelf -->
+                            <img src="<?= htmlspecialchars($src); ?>"
+                                alt="Panorama pagina <?= $paginaNummer; ?>"
+                                style="height: <?= (int)$height; ?>px;">
+
+                            <!-- Alle waypoints voor deze pagina -->
+                            <?php foreach ($waypoints as $wp): ?>
+                                <?php
+                                // posities uit de database
+                                $wpTop  = $wp['waypoint_top']  ?? 0;
+                                $wpLeft = $wp['waypoint_left'] ?? 0;
+
+                                // Foto uit extra_info
+                                $fotoPath = $wp['foto'] ?? '';
+                                $fotoPath = str_replace('\\', '/', $fotoPath);
+
+                                // Placeholder die NIET getoond mag worden
+                                $placeholder = 'includes/image/aanvullende_fotos/GeenFotoBeschikbaar.png';
+
+                                // Alleen tonen als het geen placeholder is
+                                $toonFoto = !empty($fotoPath) && $fotoPath !== $placeholder;
+                                ?>
+
+                                <!-- Waypoint nu met TOP + LEFT uit de DB -->
+                                <div class="waypoint"
+                                    style="top: <?= (int)$wpTop; ?>px; left: <?= (int)$wpLeft; ?>px;">
+                                    <span><i class="fa-solid fa-question"></i></span>
+
+                                    <div class="info">
+                                        <?php if ($toonFoto): ?>
+                                            <img src="<?= htmlspecialchars($fotoPath); ?>"
+                                                alt="Aanvullende foto pagina <?= $paginaNummer; ?>"
+                                                style="max-width: 100%; height: auto; margin-bottom: 8px; border-radius: 10px;">
+                                        <?php endif; ?>
+
+                                        <p><?= nl2br(htmlspecialchars($wp['aanvullende_info'])); ?></p>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+
+                        </div><!-- /panorama-page -->
+
+                    <?php endforeach; ?>
                 </div>
-
-                <div class="waypoint" style="top: 180px; left: 120px;">
-                    <span><i class="fa-solid fa-question"></i></span>
-                    <div class="info">
-                        <p>Het Panorama van Utrecht bestaat uit vier aaneengeplakte, zigzag gevouwen bladen met een totale lengte van 5,82 meter. Het panorama is een meterslange tekening van een rondwandeling om het centrum van Utrecht,met steeds wisselend uitzicht vanaf de singels. Het geeft een heel precies beeld van hoe de stad in 1859 er uitzag en het leuke is dat je ook het verloop van de seizoenen in de tekening terugziet.</p>
-                    </div>
-                </div>
-
             </div>
-            <div id="zoomen">
-                <button class="cirkel" onclick="zoomOut()">
-                    <img src="includes/image/verkleinglas.png" alt="uitzoomen" id="verkleinglas">
-                </button>
 
-                <button class="cirkel" onclick="zoomIn()">
-                    <img src="includes/image/vergrootglas.png" alt="inzoomen">
-                </button>
-
-                <button class="cirkel" onclick="resetZoom()">
-                    <span id="resetknoppanorama">↺</span>
-                </button>
-            </div>
         </div>
+        <div id="zoomen">
+            <button class="cirkel" onclick="zoomOut()">
+                <img src="includes/image/verkleinglas.png" alt="uitzoomen" id="verkleinglas">
+            </button>
+
+            <button class="cirkel" onclick="zoomIn()">
+                <img src="includes/image/vergrootglas.png" alt="inzoomen">
+            </button>
+
+            <button class="cirkel" onclick="resetZoom()">
+                <span id="resetknoppanorama">↺</span>
+            </button>
+        </div>
+    </div>
 
     </div>
 
@@ -207,6 +248,23 @@ include("includes/header.php");
     }
 
     let translations;
+        const hotspotToggle = document.getElementById("hotspotToggle");
+
+        //hotspots tonen/verbergen
+        function updateHotspots() {
+            if (hotspotToggle.checked) {
+                document.body.classList.remove("hide-hotspots");
+            } else {
+                document.body.classList.add("hide-hotspots");
+            }
+        }
+
+        // Start met hotspots aan
+        updateHotspots();
+
+        // hotspots worden zichtbaar of niet zichtbaar
+        hotspotToggle.addEventListener("change", updateHotspots);
+
 
     fetch("translations.json")
         .then(res => res.json())

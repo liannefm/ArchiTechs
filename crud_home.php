@@ -51,6 +51,11 @@ if (!isset($_SESSION['user'])) {
                                         detail
                                     </div>
                                 </a>
+                                <a href='crud_hotspots.php?id={$v['id']}'>
+                                    <div class='CrudKnoppen'>
+                                        Hotspots
+                                    </div>
+                                </a>
                             </div>";
                             }
                             ?>
