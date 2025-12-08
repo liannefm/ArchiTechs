@@ -22,14 +22,13 @@ try {
 
     // 2) Alle extra info / waypoints per pagina
     $stmt2 = $conn->prepare("
-        SELECT 
-            pagina_nummer,
-            aanvullende_info,
-            waypoint_top,
-            waypoint_left
-        FROM extra_info
-        WHERE aanvullende_info IS NOT NULL
-          AND aanvullende_info <> ''
+    SELECT 
+        pagina_nummer,
+        aanvullende_info,
+        waypoint_top,
+        waypoint_left,
+        foto
+    FROM extra_info
     ");
     $stmt2->execute();
     $waypointsRaw = $stmt2->fetchAll(PDO::FETCH_ASSOC);
@@ -122,48 +121,67 @@ try {
                         <?php
                         $paginaNummer = (int)$row['pagina_nummer'];
 
-                        // Paden netjes maken
+                        // Afbeeldingspad netjes maken
                         $src = str_replace('\\', '/', $row['pagina_foto']);
 
-                        // Posities/laag van deze pagina uit DB
+                        // Posities uit de DB
                         $height     = $row['img_height']      ?? 500;
                         $marginLeft = $row['img_margin_left'] ?? 0;
                         $marginTop  = $row['img_margin_top']  ?? 0;
                         $zIndex     = $row['img_z_index']     ?? $paginaNummer;
 
-                        // Alle waypoints die bij deze pagina horen
+                        // Alle waypoints die bij deze pagina horen (via pagina_nummer)
                         $waypoints = $waypointsPerPagina[$paginaNummer] ?? [];
                         ?>
 
-                        <!-- WRAPPER VOOR ÉÉN PAGINA -->
+                        <!-- Wrapper voor één pagina: hieraan hangen de waypoints -->
                         <div class="panorama-page"
                             style="
-                            margin-left: <?= (int)$marginLeft; ?>px;
-                            margin-top:  <?= (int)$marginTop; ?>px;
-                            z-index:     <?= (int)$zIndex; ?>;
-                        ">
+                    margin-left: <?= (int)$marginLeft; ?>px;
+                    margin-top:  <?= (int)$marginTop; ?>px;
+                    z-index:     <?= (int)$zIndex; ?>;
+                 ">
 
-                            <!-- De pagina-afbeelding zelf -->
+                            <!-- De panorama-afbeelding zelf -->
                             <img src="<?= htmlspecialchars($src); ?>"
-                                alt="Panorama Image <?= $paginaNummer; ?>"
-                                style="height: <?= htmlspecialchars($height); ?>px;">
+                                alt="Panorama pagina <?= $paginaNummer; ?>"
+                                style="height: <?= (int)$height; ?>px;">
 
-                            <!-- Alle waypoints op deze pagina -->
+                            <!-- Alle waypoints voor deze pagina -->
                             <?php foreach ($waypoints as $wp): ?>
                                 <?php
-                                $wpTop  = $wp['waypoint_top']  ?? 180;
+                                // horizontale positie BINNEN de pagina (links-rechts)
                                 $wpLeft = $wp['waypoint_left'] ?? 120;
+
+                                // Foto uit extra_info
+                                $fotoPath = $wp['foto'] ?? '';
+                                $fotoPath = str_replace('\\', '/', $fotoPath);
+
+                                // Placeholder die NIET getoond mag worden
+                                $placeholder = 'includes/image/aanvullende_fotos/GeenFotoBeschikbaar.png';
+
+                                // Alleen tonen als het geen placeholder is
+                                $toonFoto = !empty($fotoPath) && $fotoPath !== $placeholder;
                                 ?>
+
+                                <!-- Waypoint: onderaan de pagina (bottom), horizontale plek uit DB -->
                                 <div class="waypoint"
-                                    style="top: <?= (int)$wpTop; ?>px; left: <?= (int)$wpLeft; ?>px;">
+                                    style="bottom: 10px; left: <?= (int)$wpLeft; ?>px;">
                                     <span><i class="fa-solid fa-question"></i></span>
+
                                     <div class="info">
+                                        <?php if ($toonFoto): ?>
+                                            <img src="<?= htmlspecialchars($fotoPath); ?>"
+                                                alt="Aanvullende foto pagina <?= $paginaNummer; ?>"
+                                                style="max-width: 100%; height: auto; margin-bottom: 8px; border-radius: 10px;">
+                                        <?php endif; ?>
+
                                         <p><?= nl2br(htmlspecialchars($wp['aanvullende_info'])); ?></p>
                                     </div>
                                 </div>
                             <?php endforeach; ?>
 
-                        </div>
+                        </div><!-- /panorama-page -->
 
                     <?php endforeach; ?>
                 </div>
