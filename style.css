@@ -659,7 +659,8 @@ img.avatar {
 #achtergrondEditPanorama h2 {
   background-color: #247065;
   color: white;
-  width: 300px;
+  width: auto;
+  padding: 5px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -785,6 +786,44 @@ img.avatar {
 
 /* eind edit_panorama */
 
+/* begin crud_hotspots */
+
+.EdithotspotsBox {
+  border: 7px solid #344ec5;
+  background-color: #566bcc;
+  color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  flex-direction: column;
+}
+
+.EdithotspotsBox h3 {
+  font-size: 25px;
+}
+
+#HotspotSubmitKnop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #247065;
+  border: 3px solid #16413b;
+  color: white;
+
+  width: 150px;
+  height: 20px;
+  padding: 15px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.HotspotSubmitKnop:hover {
+  transform: scale(1.1);
+}
+
+/* einde crud_hotspots */
+
 /* styling leporello */
 
 .panorama-wrapper {
@@ -792,7 +831,8 @@ img.avatar {
   height: calc(100vh - 150px);
   overflow-x: auto;
   overflow-y: auto;
-  max-height: 560px;
+  /* max-height: 560px; */
+  max-height: 810px;
   margin-top: 100px;
 }
 
@@ -833,6 +873,10 @@ img.avatar {
   color: #fff;
 }
 
+.hide-hotspots .waypoint {
+  display: none;
+}
+
 .panorama .info {
   display: none;
   position: absolute;
@@ -848,6 +892,12 @@ img.avatar {
 
 .panorama .info.show {
   display: block;
+}
+
+.panorama-page {
+  position: relative;
+  flex-shrink: 0;
+  display: inline-block;
 }
 
 #zoomen {
@@ -1192,15 +1242,6 @@ html::-webkit-scrollbar {
   border-radius: 999px;
   font-size: 11px;
   opacity: .9;
-}
-
-
-
-.panorama {
-  display: flex;
-  flex-direction: row;
-  height: auto;
-  overflow-y: scroll;
 }
 
 /* einde styling laparello */
