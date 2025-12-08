@@ -659,7 +659,8 @@ img.avatar {
 #achtergrondEditPanorama h2 {
   background-color: #247065;
   color: white;
-  width: 300px;
+  width: auto;
+  padding: 5px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -785,6 +786,44 @@ img.avatar {
 
 /* eind edit_panorama */
 
+/* begin crud_hotspots */
+
+.EdithotspotsBox {
+  border: 7px solid #344ec5;
+  background-color: #566bcc;
+  color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  flex-direction: column;
+}
+
+.EdithotspotsBox h3 {
+  font-size: 25px;
+}
+
+#HotspotSubmitKnop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #247065;
+  border: 3px solid #16413b;
+  color: white;
+
+  width: 150px;
+  height: 20px;
+  padding: 15px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.HotspotSubmitKnop:hover {
+  transform: scale(1.1);
+}
+
+/* einde crud_hotspots */
+
 /* styling leporello */
 
 .panorama-wrapper {
@@ -832,6 +871,10 @@ img.avatar {
 .panorama .waypoint span {
   font-size: 27px;
   color: #fff;
+}
+
+.hide-hotspots .waypoint {
+  display: none;
 }
 
 .panorama .info {

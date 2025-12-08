@@ -63,7 +63,7 @@ try {
 
                 <div id="lightmode"><span id="lichtmodus" class="show">lichtmodus</span><span id="donkeremodus">donkere modus</span><label class="switch"><input onChange="toggleDarkMode()" type="checkbox"><span class="slider round"></span></label></div><br>
 
-                <div id="hotspot">hotspot<label class="switch"><input type="checkbox"><span class="slider round"></span></label></div>
+                <div id="hotspot">hotspot<label class="switch"><input id="hotspotToggle" type="checkbox" checked><span class="slider round"></span></label></div>
 
                 <button class="dropdown-btn">
                     <span id="talen">talen</span>
@@ -150,8 +150,9 @@ try {
                             <!-- Alle waypoints voor deze pagina -->
                             <?php foreach ($waypoints as $wp): ?>
                                 <?php
-                                // horizontale positie BINNEN de pagina (links-rechts)
-                                $wpLeft = $wp['waypoint_left'] ?? 120;
+                                // posities uit de database
+                                $wpTop  = $wp['waypoint_top']  ?? 0;
+                                $wpLeft = $wp['waypoint_left'] ?? 0;
 
                                 // Foto uit extra_info
                                 $fotoPath = $wp['foto'] ?? '';
@@ -164,9 +165,9 @@ try {
                                 $toonFoto = !empty($fotoPath) && $fotoPath !== $placeholder;
                                 ?>
 
-                                <!-- Waypoint: onderaan de pagina (bottom), horizontale plek uit DB -->
+                                <!-- Waypoint nu met TOP + LEFT uit de DB -->
                                 <div class="waypoint"
-                                    style="bottom: 10px; left: <?= (int)$wpLeft; ?>px;">
+                                    style="top: <?= (int)$wpTop; ?>px; left: <?= (int)$wpLeft; ?>px;">
                                     <span><i class="fa-solid fa-question"></i></span>
 
                                     <div class="info">
@@ -245,6 +246,23 @@ try {
                 darkModeTextElement.classList.remove('show');
             }
         }
+
+        const hotspotToggle = document.getElementById("hotspotToggle");
+
+        //hotspots tonen/verbergen
+        function updateHotspots() {
+            if (hotspotToggle.checked) {
+                document.body.classList.remove("hide-hotspots");
+            } else {
+                document.body.classList.add("hide-hotspots");
+            }
+        }
+
+        // Start met hotspots aan
+        updateHotspots();
+
+        // hotspots worden zichtbaar of niet zichtbaar
+        hotspotToggle.addEventListener("change", updateHotspots);
 
 
         let translations;
