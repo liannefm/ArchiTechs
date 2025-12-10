@@ -22,7 +22,7 @@ if (!isset($_SESSION['user'])) {
         <div id="taal_content">
 
             <!-- panoramaNl pagina -->
-            <div id="InhoudPanoramaNl">
+            <div id="InhoudPanoramaNL">
                 <div class="AchtergrondOverzicht">
                     <h2>Inhoud panorama Nl</h2>
                     <?php
@@ -48,7 +48,7 @@ if (!isset($_SESSION['user'])) {
                                 </a>
                                 <a href='detail_panorama.php?id={$v['id']}'>
                                     <div class='CrudKnoppen'>
-                                        detail
+                                        Detail
                                     </div>
                                 </a>
                                 <a href='crud_hotspots.php?id={$v['id']}'>
@@ -71,7 +71,7 @@ if (!isset($_SESSION['user'])) {
             </div>
 
             <!-- InhoudAanvullendNl pagina -->
-            <div id="InhoudAanvullendNl" style="display:none;">
+            <div id="InhoudAanvullendNL" style="display:none;">
                 <div class="AchtergrondOverzicht">
                     <h2>Inhoud aanvullend Nl</h2>
                     <?php
